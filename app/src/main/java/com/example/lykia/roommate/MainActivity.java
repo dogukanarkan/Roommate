@@ -11,7 +11,7 @@ import com.example.lykia.roommate.R;
 public class MainActivity extends AppCompatActivity {
 
     Button buttonRegister;
-
+    Button buttonLogin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +22,15 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent= new Intent(MainActivity.this,RegisterActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        buttonLogin=(Button)findViewById(R.id.loginButton);
+        buttonLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent= new Intent(MainActivity.this,LoginActivity.class);
                 startActivity(intent);
             }
         });
