@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Roommate</string>
+    <string name="bootstrapbutton">BootstrapButton</string>
 </resources>
