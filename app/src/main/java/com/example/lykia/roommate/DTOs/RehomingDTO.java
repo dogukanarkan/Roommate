@@ -14,6 +14,16 @@ public class RehomingDTO {
     private String information;
     private Date addition_date;
 
+    public RehomingDTO(UserDTO owner_id, RaceDTO race_id, String code, String image_path, String gender, int month_old, String information) {
+        this.owner_id = owner_id;
+        this.race_id = race_id;
+        this.code = code;
+        this.image_path = image_path;
+        this.gender = gender;
+        this.month_old = month_old;
+        this.information = information;
+    }
+
     public int getPet_id() {
         return pet_id;
     }
