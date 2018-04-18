@@ -3,7 +3,10 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Roommate.iml" filepath="$PROJECT_DIR$/Roommate.iml" />
+<<<<<<< HEAD
       <module fileurl="file://C:\Users\hilal\Desktop\Projects\Roommate\.idea\Roommate.iml" filepath="C:\Users\hilal\Desktop\Projects\Roommate\.idea\Roommate.iml" />
+=======
+>>>>>>> Design bağımlılığı eklendi.
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://C:\Users\hilal\Desktop\Projects\Roommate\app\app.iml" filepath="C:\Users\hilal\Desktop\Projects\Roommate\app\app.iml" />
     </modules>
