@@ -4,6 +4,78 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LoginActivity">
+    android:background="@color/bootstrap_brand_secondary_fill"
+    tools:context=".LoginActivity"
+    tools:layout_editor_absoluteY="81dp">
+
+    <Button
+        android:id="@+id/loginButton"
+
+        android:layout_width="0dp"
+        android:layout_height="53dp"
+
+        android:layout_marginBottom="91dp"
+        android:layout_marginEnd="56dp"
+        android:layout_marginStart="56dp"
+        android:background="@drawable/buttonshapes"
+        android:shadowColor="#8A6367"
+        android:shadowDx="0"
+        android:shadowDy="-1"
+        android:shadowRadius="5"
+        android:text="Giriş Yap"
+        android:textAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Title.Inverse"
+        android:textSize="25sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bootstrapEditText2" />
+
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="37dp"
+        android:layout_marginTop="64dp"
+        app:layout_constraintBottom_toTopOf="@+id/bootstrapEditText1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/logo"
+        tools:ignore="MissingConstraints" />
+
+    <com.beardedhen.androidbootstrap.BootstrapEditText
+        android:id="@+id/bootstrapEditText1"
+        android:layout_width="0dp"
+        android:layout_height="43dp"
+        android:layout_marginBottom="23dp"
+        android:layout_marginEnd="64dp"
+        android:layout_marginStart="64dp"
+        android:hint="email"
+        app:bootstrapBrand="primary"
+        app:bootstrapSize="md"
+        app:layout_constraintBottom_toTopOf="@+id/bootstrapEditText2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        tools:ignore="MissingConstraints,UnknownId" />
+
+    <com.beardedhen.androidbootstrap.BootstrapEditText
+        android:id="@+id/bootstrapEditText2"
+        android:layout_width="0dp"
+        android:layout_height="43dp"
+        android:layout_marginBottom="24dp"
+        android:layout_marginEnd="64dp"
+        android:layout_marginStart="64dp"
+        android:hint="parola"
+        android:password="true"
+        app:bootstrapBrand="primary"
+        app:bootstrapSize="md"
+        app:layout_constraintBottom_toTopOf="@+id/loginButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bootstrapEditText1"
+        tools:ignore="MissingConstraints,UnknownId" />
+
 
 </android.support.constraint.ConstraintLayout>
