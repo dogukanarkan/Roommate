@@ -6,6 +6,11 @@ public class RaceDTO {
     private AnimalDTO animal_id;
     private String race_name;
 
+    public RaceDTO(AnimalDTO animal_id, String race_name) {
+        this.animal_id = animal_id;
+        this.race_name = race_name;
+    }
+
     public int getRace_id() {
         return race_id;
     }

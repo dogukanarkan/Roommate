@@ -13,6 +13,15 @@ public class UserDTO {
     private String password;
     private Date register_date;
 
+    public UserDTO(String mail, String image_path, String first_name, String last_name, String location, String password) {
+        this.mail = mail;
+        this.image_path = image_path;
+        this.first_name = first_name;
+        this.last_name = last_name;
+        this.location = location;
+        this.password = password;
+    }
+
     public int getUser_id() {
         return user_id;
     }

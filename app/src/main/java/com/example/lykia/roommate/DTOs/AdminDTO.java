@@ -12,6 +12,13 @@ public class AdminDTO {
     private Date register_date;
     private Date last_login;
 
+    public AdminDTO(String username, String password, String first_name, String last_name) {
+        this.username = username;
+        this.password = password;
+        this.first_name = first_name;
+        this.last_name = last_name;
+    }
+
     public int getAccount_id() {
         return account_id;
     }

@@ -11,6 +11,13 @@ public class ArticleDTO {
     private String text;
     private Date addition_date;
 
+    public ArticleDTO(AdminDTO addition_id, String image_path, String header, String text) {
+        this.addition_id = addition_id;
+        this.image_path = image_path;
+        this.header = header;
+        this.text = text;
+    }
+
     public int getArticle_id() {
         return article_id;
     }
