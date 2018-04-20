@@ -5,6 +5,9 @@ public class AnimalDTO {
     private int Animal;
     private String animal_name;
 
+    public AnimalDTO() {
+    }
+
     public AnimalDTO(String animal_name) {
         this.animal_name = animal_name;
     }

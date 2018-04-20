@@ -14,6 +14,9 @@ public class RehomingDTO {
     private String information;
     private Date addition_date;
 
+    public RehomingDTO() {
+    }
+
     public RehomingDTO(UserDTO user, RaceDTO race, String code, String image_path, String gender, int month_old, String information) {
         this.user = user;
         this.race = race;

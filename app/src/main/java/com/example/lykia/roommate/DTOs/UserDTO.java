@@ -13,6 +13,9 @@ public class UserDTO {
     private String password;
     private Date register_date;
 
+    public UserDTO() {
+    }
+
     public UserDTO(String mail, String image_path, String first_name, String last_name, String location, String password) {
         this.mail = mail;
         this.image_path = image_path;

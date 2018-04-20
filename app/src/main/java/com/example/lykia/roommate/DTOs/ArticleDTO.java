@@ -11,6 +11,9 @@ public class ArticleDTO {
     private String text;
     private Date addition_date;
 
+    public ArticleDTO() {
+    }
+
     public ArticleDTO(AdminDTO admin, String image_path, String header, String text) {
         this.admin = admin;
         this.image_path = image_path;
