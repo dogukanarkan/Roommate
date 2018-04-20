@@ -5,14 +5,14 @@ import java.sql.Date;
 public class ArticleDTO {
 
     private int article_id;
-    private AdminDTO addition_id;
+    private AdminDTO admin;
     private String image_path;
     private String header;
     private String text;
     private Date addition_date;
 
-    public ArticleDTO(AdminDTO addition_id, String image_path, String header, String text) {
-        this.addition_id = addition_id;
+    public ArticleDTO(AdminDTO admin, String image_path, String header, String text) {
+        this.admin = admin;
         this.image_path = image_path;
         this.header = header;
         this.text = text;
@@ -26,12 +26,12 @@ public class ArticleDTO {
         this.article_id = article_id;
     }
 
-    public AdminDTO getAddition_id() {
-        return addition_id;
+    public AdminDTO getAdmin() {
+        return admin;
     }
 
-    public void setAddition_id(AdminDTO addition_id) {
-        this.addition_id = addition_id;
+    public void setAdmin(AdminDTO admin) {
+        this.admin = admin;
     }
 
     public String getImage_path() {

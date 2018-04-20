@@ -3,11 +3,11 @@ package com.example.lykia.roommate.DTOs;
 public class RaceDTO {
 
     private int race_id;
-    private AnimalDTO animal_id;
+    private AnimalDTO animal;
     private String race_name;
 
-    public RaceDTO(AnimalDTO animal_id, String race_name) {
-        this.animal_id = animal_id;
+    public RaceDTO(AnimalDTO animal, String race_name) {
+        this.animal = animal;
         this.race_name = race_name;
     }
 
@@ -19,12 +19,12 @@ public class RaceDTO {
         this.race_id = race_id;
     }
 
-    public AnimalDTO getAnimal_id() {
-        return animal_id;
+    public AnimalDTO getAnimal() {
+        return animal;
     }
 
-    public void setAnimal_id(AnimalDTO animal_id) {
-        this.animal_id = animal_id;
+    public void setAnimal(AnimalDTO animal) {
+        this.animal = animal;
     }
 
     public String getRace_name() {

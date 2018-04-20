@@ -5,8 +5,8 @@ import java.sql.Date;
 public class RehomingDTO {
 
     private int pet_id;
-    private UserDTO owner_id;
-    private RaceDTO race_id;
+    private UserDTO user;
+    private RaceDTO race;
     private String code;
     private String image_path;
     private String gender;
@@ -14,9 +14,9 @@ public class RehomingDTO {
     private String information;
     private Date addition_date;
 
-    public RehomingDTO(UserDTO owner_id, RaceDTO race_id, String code, String image_path, String gender, int month_old, String information) {
-        this.owner_id = owner_id;
-        this.race_id = race_id;
+    public RehomingDTO(UserDTO user, RaceDTO race, String code, String image_path, String gender, int month_old, String information) {
+        this.user = user;
+        this.race = race;
         this.code = code;
         this.image_path = image_path;
         this.gender = gender;
@@ -32,20 +32,20 @@ public class RehomingDTO {
         this.pet_id = pet_id;
     }
 
-    public UserDTO getOwner_id() {
-        return owner_id;
+    public UserDTO getUser() {
+        return user;
     }
 
-    public void setOwner_id(UserDTO owner_id) {
-        this.owner_id = owner_id;
+    public void setUser(UserDTO user) {
+        this.user = user;
     }
 
-    public RaceDTO getRace_id() {
-        return race_id;
+    public RaceDTO getRace() {
+        return race;
     }
 
-    public void setRace_id(RaceDTO race_id) {
-        this.race_id = race_id;
+    public void setRace(RaceDTO race) {
+        this.race = race;
     }
 
     public String getCode() {
