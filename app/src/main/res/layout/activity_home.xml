@@ -3,55 +3,54 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     tools:context=".HomeActivity"
-    android:orientation="vertical">
+    android:orientation="horizontal">
 
     <Spinner
         android:layout_width="125dp"
         android:layout_height="34dp"
-        tools:layout_editor_absoluteX="5dp"
-        tools:layout_editor_absoluteY="0dp">
-
-    </Spinner>
-
-    <Spinner
-        android:layout_width="125dp"
-        android:layout_height="34dp"
-        tools:layout_editor_absoluteX="255dp"
-        tools:layout_editor_absoluteY="0dp">
-
-    </Spinner>
-
-    <Spinner
-        android:layout_width="125dp"
-        android:layout_height="34dp"
+        android:id="@+id/animalSpinner"
         tools:layout_editor_absoluteX="130dp"
         tools:layout_editor_absoluteY="0dp">
-
     </Spinner>
 
-    <HorizontalScrollView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+    <Spinner
+        android:layout_width="125dp"
+        android:layout_height="34dp"
+        android:id="@+id/raceSpinner"
+        tools:layout_editor_absoluteX="255dp"
+        tools:layout_editor_absoluteY="0dp">
+    </Spinner>
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+    <Spinner
+        android:layout_width="125dp"
+        android:layout_height="34dp"
+        android:id="@+id/genderSpinner"
+        tools:layout_editor_absoluteX="5dp"
+        tools:layout_editor_absoluteY="0dp">
+    </Spinner>
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
-            <ListView
-                android:layout_width="404dp"
-                android:layout_height="match_parent"
-                tools:layout_editor_absoluteX="500dp"
-                tools:layout_editor_absoluteY="500dp">
+       <HorizontalScrollView
+          android:layout_width="match_parent"
+          android:layout_height="364dp">
 
-            </ListView>
+       </HorizontalScrollView>
+    </LinearLayout>
 
+    <ListView
+        android:id="@+id/listView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerHorizontal="true">
 
-        </LinearLayout>
+    </ListView>
 
-    </HorizontalScrollView>
 
 </LinearLayout>
