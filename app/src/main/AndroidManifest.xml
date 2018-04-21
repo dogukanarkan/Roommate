@@ -16,10 +16,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".RegisterActivity"
-            android:parentActivityName=".MainActivity"/>
-        <activity android:name=".LoginActivity"
-            android:parentActivityName=".MainActivity"/>
+        <activity
+            android:name=".RegisterActivity"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".LoginActivity"
+            android:parentActivityName=".MainActivity" />
         <activity android:name=".ForgotPasswordActivity" />
         <activity android:name=".VerificationPasswordActivity" />
         <activity android:name=".HomeActivity" />
@@ -31,7 +33,8 @@
         <activity android:name=".AllMessageActivity" />
         <activity android:name=".RehomingActivity" />
         <activity android:name=".BriefArticleActivity" />
-        <activity android:name=".DetailArticleActivity"></activity>
+        <activity android:name=".DetailArticleActivity" />
+        <activity android:name=".AddArticleActivity" />
     </application>
 
 </manifest>
