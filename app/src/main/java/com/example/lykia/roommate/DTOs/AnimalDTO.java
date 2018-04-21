@@ -2,29 +2,29 @@ package com.example.lykia.roommate.DTOs;
 
 public class AnimalDTO {
 
-    private int Animal;
-    private String animal_name;
+    private int animalId;
+    private String animalName;
 
     public AnimalDTO() {
     }
 
-    public AnimalDTO(String animal_name) {
-        this.animal_name = animal_name;
+    public AnimalDTO(String animalName) {
+        this.animalName = animalName;
     }
 
-    public int getAnimal() {
-        return Animal;
+    public int getAnimalId() {
+        return animalId;
     }
 
-    public void setAnimal(int animal) {
-        Animal = animal;
+    public void setAnimalId(int animalId) {
+        this.animalId = animalId;
     }
 
-    public String getAnimal_name() {
-        return animal_name;
+    public String getAnimalName() {
+        return animalName;
     }
 
-    public void setAnimal_name(String animal_name) {
-        this.animal_name = animal_name;
+    public void setAnimalName(String animalName) {
+        this.animalName = animalName;
     }
 }

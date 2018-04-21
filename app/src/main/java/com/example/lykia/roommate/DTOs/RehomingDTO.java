@@ -4,35 +4,35 @@ import java.sql.Date;
 
 public class RehomingDTO {
 
-    private int pet_id;
+    private int petId;
     private UserDTO user;
     private RaceDTO race;
     private String code;
-    private String image_path;
+    private String imagePath;
     private String gender;
-    private int month_old;
+    private int monthOld;
     private String information;
-    private Date addition_date;
+    private Date additionDate;
 
     public RehomingDTO() {
     }
 
-    public RehomingDTO(UserDTO user, RaceDTO race, String code, String image_path, String gender, int month_old, String information) {
+    public RehomingDTO(UserDTO user, RaceDTO race, String code, String imagePath, String gender, int monthOld, String information) {
         this.user = user;
         this.race = race;
         this.code = code;
-        this.image_path = image_path;
+        this.imagePath = imagePath;
         this.gender = gender;
-        this.month_old = month_old;
+        this.monthOld = monthOld;
         this.information = information;
     }
 
-    public int getPet_id() {
-        return pet_id;
+    public int getPetId() {
+        return petId;
     }
 
-    public void setPet_id(int pet_id) {
-        this.pet_id = pet_id;
+    public void setPetId(int petId) {
+        this.petId = petId;
     }
 
     public UserDTO getUser() {
@@ -59,12 +59,12 @@ public class RehomingDTO {
         this.code = code;
     }
 
-    public String getImage_path() {
-        return image_path;
+    public String getImagePath() {
+        return imagePath;
     }
 
-    public void setImage_path(String image_path) {
-        this.image_path = image_path;
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
     }
 
     public String getGender() {
@@ -75,12 +75,12 @@ public class RehomingDTO {
         this.gender = gender;
     }
 
-    public int getMonth_old() {
-        return month_old;
+    public int getMonthOld() {
+        return monthOld;
     }
 
-    public void setMonth_old(int month_old) {
-        this.month_old = month_old;
+    public void setMonthOld(int monthOld) {
+        this.monthOld = monthOld;
     }
 
     public String getInformation() {
@@ -91,11 +91,11 @@ public class RehomingDTO {
         this.information = information;
     }
 
-    public Date getAddition_date() {
-        return addition_date;
+    public Date getAdditionDate() {
+        return additionDate;
     }
 
-    public void setAddition_date(Date addition_date) {
-        this.addition_date = addition_date;
+    public void setAdditionDate(Date additionDate) {
+        this.additionDate = additionDate;
     }
 }

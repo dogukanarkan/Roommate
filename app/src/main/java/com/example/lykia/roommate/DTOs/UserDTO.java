@@ -4,33 +4,33 @@ import java.sql.Date;
 
 public class UserDTO {
 
-    private int user_id;
+    private int userId;
     private String mail;
-    private String image_path;
-    private String first_name;
-    private String last_name;
+    private String imagePath;
+    private String firstName;
+    private String lastName;
     private String location;
     private String password;
-    private Date register_date;
+    private Date registerDate;
 
     public UserDTO() {
     }
 
-    public UserDTO(String mail, String image_path, String first_name, String last_name, String location, String password) {
+    public UserDTO(String mail, String imagePath, String firstName, String lastName, String location, String password) {
         this.mail = mail;
-        this.image_path = image_path;
-        this.first_name = first_name;
-        this.last_name = last_name;
+        this.imagePath = imagePath;
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.location = location;
         this.password = password;
     }
 
-    public int getUser_id() {
-        return user_id;
+    public int getUserId() {
+        return userId;
     }
 
-    public void setUser_id(int user_id) {
-        this.user_id = user_id;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     public String getMail() {
@@ -41,28 +41,28 @@ public class UserDTO {
         this.mail = mail;
     }
 
-    public String getImage_path() {
-        return image_path;
+    public String getImagePath() {
+        return imagePath;
     }
 
-    public void setImage_path(String image_path) {
-        this.image_path = image_path;
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
     }
 
-    public String getFirst_name() {
-        return first_name;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setFirst_name(String first_name) {
-        this.first_name = first_name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public String getLast_name() {
-        return last_name;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setLast_name(String last_name) {
-        this.last_name = last_name;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getLocation() {
@@ -81,11 +81,11 @@ public class UserDTO {
         this.password = password;
     }
 
-    public Date getRegister_date() {
-        return register_date;
+    public Date getRegisterDate() {
+        return registerDate;
     }
 
-    public void setRegister_date(Date register_date) {
-        this.register_date = register_date;
+    public void setRegisterDate(Date registerDate) {
+        this.registerDate = registerDate;
     }
 }

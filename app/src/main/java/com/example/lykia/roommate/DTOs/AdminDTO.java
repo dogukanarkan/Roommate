@@ -4,30 +4,30 @@ import java.sql.Date;
 
 public class AdminDTO {
 
-    private int account_id;
+    private int accountId;
     private String username;
     private String password;
-    private String first_name;
-    private String last_name;
-    private Date register_date;
-    private Date last_login;
+    private String firstName;
+    private String lastName;
+    private Date registerDate;
+    private Date lastLogin;
 
     public AdminDTO() {
     }
 
-    public AdminDTO(String username, String password, String first_name, String last_name) {
+    public AdminDTO(String username, String password, String firstName, String lastName) {
         this.username = username;
         this.password = password;
-        this.first_name = first_name;
-        this.last_name = last_name;
+        this.firstName = firstName;
+        this.lastName = lastName;
     }
 
-    public int getAccount_id() {
-        return account_id;
+    public int getAccountId() {
+        return accountId;
     }
 
-    public void setAccount_id(int account_id) {
-        this.account_id = account_id;
+    public void setAccountId(int accountId) {
+        this.accountId = accountId;
     }
 
     public String getUsername() {
@@ -46,35 +46,35 @@ public class AdminDTO {
         this.password = password;
     }
 
-    public String getFirst_name() {
-        return first_name;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setFirst_name(String first_name) {
-        this.first_name = first_name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public String getLast_name() {
-        return last_name;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setLast_name(String last_name) {
-        this.last_name = last_name;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
-    public Date getRegister_date() {
-        return register_date;
+    public Date getRegisterDate() {
+        return registerDate;
     }
 
-    public void setRegister_date(Date register_date) {
-        this.register_date = register_date;
+    public void setRegisterDate(Date registerDate) {
+        this.registerDate = registerDate;
     }
 
-    public Date getLast_login() {
-        return last_login;
+    public Date getLastLogin() {
+        return lastLogin;
     }
 
-    public void setLast_login(Date last_login) {
-        this.last_login = last_login;
+    public void setLastLogin(Date lastLogin) {
+        this.lastLogin = lastLogin;
     }
 }
