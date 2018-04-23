@@ -28,7 +28,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bootstrapEditText2" />
+        app:layout_constraintTop_toBottomOf="@+id/loginEditTextPassword" />
 
 
     <ImageView
@@ -37,7 +37,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="37dp"
         android:layout_marginTop="64dp"
-        app:layout_constraintBottom_toTopOf="@+id/bootstrapEditText1"
+        app:layout_constraintBottom_toTopOf="@+id/loginEditTextMail"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -45,7 +45,7 @@
         tools:ignore="MissingConstraints" />
 
     <com.beardedhen.androidbootstrap.BootstrapEditText
-        android:id="@+id/bootstrapEditText1"
+        android:id="@+id/loginEditTextMail"
         android:layout_width="0dp"
         android:layout_height="43dp"
         android:layout_marginBottom="23dp"
@@ -54,14 +54,14 @@
         android:hint="email"
         app:bootstrapBrand="primary"
         app:bootstrapSize="md"
-        app:layout_constraintBottom_toTopOf="@+id/bootstrapEditText2"
+        app:layout_constraintBottom_toTopOf="@+id/loginEditTextPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView"
         tools:ignore="MissingConstraints,UnknownId" />
 
     <com.beardedhen.androidbootstrap.BootstrapEditText
-        android:id="@+id/bootstrapEditText2"
+        android:id="@+id/loginEditTextPassword"
         android:layout_width="0dp"
         android:layout_height="43dp"
         android:layout_marginBottom="24dp"
@@ -74,7 +74,7 @@
         app:layout_constraintBottom_toTopOf="@+id/loginButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bootstrapEditText1"
+        app:layout_constraintTop_toBottomOf="@+id/loginEditTextMail"
         tools:ignore="MissingConstraints,UnknownId" />
 
 

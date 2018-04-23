@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
         android:layout_marginTop="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/loginEditTextFirstName"
+        app:layout_constraintBottom_toTopOf="@+id/registerEditTextFirstName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -22,7 +22,7 @@
         tools:ignore="MissingConstraints" />
 
     <com.beardedhen.androidbootstrap.BootstrapEditText
-        android:id="@+id/loginEditTextPassword"
+        android:id="@+id/registerEditTextPassword"
         android:layout_width="0dp"
         android:layout_height="41dp"
         android:layout_marginBottom="30dp"
@@ -32,15 +32,15 @@
         android:password="true"
         app:bootstrapBrand="primary"
         app:bootstrapSize="md"
-        app:layout_constraintBottom_toTopOf="@+id/loginEditTextLocation"
+        app:layout_constraintBottom_toTopOf="@+id/registerEditTextLocation"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/loginEditTextMail"
+        app:layout_constraintTop_toBottomOf="@+id/registerEditTextMail"
         tools:ignore="MissingConstraints" />
 
     <com.beardedhen.androidbootstrap.BootstrapEditText
-        android:id="@+id/loginEditTextMail"
+        android:id="@+id/registerEditTextMail"
         android:layout_width="0dp"
         android:layout_height="41dp"
         android:layout_marginBottom="30dp"
@@ -49,14 +49,14 @@
         android:hint="E-mail"
         app:bootstrapBrand="primary"
         app:bootstrapSize="md"
-        app:layout_constraintBottom_toTopOf="@+id/loginEditTextPassword"
+        app:layout_constraintBottom_toTopOf="@+id/registerEditTextPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/loginEditTextLastName"
+        app:layout_constraintTop_toBottomOf="@+id/registerEditTextLastName"
         tools:ignore="MissingConstraints" />
 
     <com.beardedhen.androidbootstrap.BootstrapEditText
-        android:id="@+id/loginEditTextFirstName"
+        android:id="@+id/registerEditTextFirstName"
         android:layout_width="0dp"
         android:layout_height="41dp"
         android:layout_marginBottom="30dp"
@@ -65,7 +65,7 @@
         android:hint="Ad"
         app:bootstrapBrand="primary"
         app:bootstrapSize="md"
-        app:layout_constraintBottom_toTopOf="@+id/loginEditTextLastName"
+        app:layout_constraintBottom_toTopOf="@+id/registerEditTextLastName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.101"
         app:layout_constraintStart_toStartOf="parent"
@@ -73,7 +73,7 @@
         tools:ignore="MissingConstraints" />
 
     <com.beardedhen.androidbootstrap.BootstrapEditText
-        android:id="@+id/loginEditTextLastName"
+        android:id="@+id/registerEditTextLastName"
         android:layout_width="0dp"
         android:layout_height="41dp"
         android:layout_marginBottom="30dp"
@@ -82,14 +82,14 @@
         android:hint="Soyad"
         app:bootstrapBrand="primary"
         app:bootstrapSize="md"
-        app:layout_constraintBottom_toTopOf="@+id/loginEditTextMail"
+        app:layout_constraintBottom_toTopOf="@+id/registerEditTextMail"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/loginEditTextFirstName"
+        app:layout_constraintTop_toBottomOf="@+id/registerEditTextFirstName"
         tools:ignore="MissingConstraints" />
 
     <com.beardedhen.androidbootstrap.BootstrapEditText
-        android:id="@+id/loginEditTextLocation"
+        android:id="@+id/registerEditTextLocation"
         android:layout_width="0dp"
         android:layout_height="41dp"
         android:layout_marginBottom="30dp"
@@ -101,7 +101,7 @@
         app:layout_constraintBottom_toTopOf="@+id/registerBtn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/loginEditTextPassword"
+        app:layout_constraintTop_toBottomOf="@+id/registerEditTextPassword"
         tools:ignore="MissingConstraints" />
 
     <Button
@@ -123,6 +123,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/loginEditTextLocation"
+        app:layout_constraintTop_toBottomOf="@+id/registerEditTextLocation"
         tools:ignore="MissingConstraints" />
 </android.support.constraint.ConstraintLayout>

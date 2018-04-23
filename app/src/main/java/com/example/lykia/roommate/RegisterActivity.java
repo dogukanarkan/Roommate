@@ -3,6 +3,7 @@ package com.example.lykia.roommate;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -14,6 +15,10 @@ import android.widget.Toast;
 
 import com.example.lykia.roommate.DAOs.UserDAO;
 import com.example.lykia.roommate.DTOs.UserDTO;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
@@ -22,6 +27,8 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Locale;
 
 public class RegisterActivity extends AppCompatActivity {
+
+    private FirebaseAuth mAuth;
 
     private Button btnRegister;
     private EditText textFirstName;
@@ -41,12 +48,14 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
+        mAuth = FirebaseAuth.getInstance();
+
         btnRegister = (Button) findViewById(R.id.registerBtn);
-        textFirstName = (EditText) findViewById(R.id.loginEditTextFirstName);
-        textLastName = (EditText) findViewById(R.id.loginEditTextLastName);
-        textMail = (EditText) findViewById(R.id.loginEditTextMail);
-        textPassword = (EditText) findViewById(R.id.loginEditTextPassword);
-        textLocation = (EditText) findViewById(R.id.loginEditTextLocation);
+        textFirstName = (EditText) findViewById(R.id.registerEditTextFirstName);
+        textLastName = (EditText) findViewById(R.id.registerEditTextLastName);
+        textMail = (EditText) findViewById(R.id.registerEditTextMail);
+        textPassword = (EditText) findViewById(R.id.registerEditTextPassword);
+        textLocation = (EditText) findViewById(R.id.registerEditTextLocation);
 
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,6 +74,8 @@ public class RegisterActivity extends AppCompatActivity {
                     btnRegister.setEnabled(true);
                 } else {
                     new Background().execute("checkMail", "registerUser");
+
+                    registerUserToFirebase(mail, password);
                 }
             }
         });
@@ -107,8 +118,8 @@ public class RegisterActivity extends AppCompatActivity {
 
                     btnRegister.setEnabled(true);
 
-                    finish();
                     startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
+                    finish();
                     break;
                 default:
                     break;
@@ -127,7 +138,7 @@ public class RegisterActivity extends AppCompatActivity {
         firstName = properCase(textFirstName.getText().toString(), trLocale);
         lastName = properCase(textLastName.getText().toString(), trLocale);
         mail = textMail.getText().toString().toLowerCase(trLocale);
-        password = textPassword.getText().toString();
+        password = toMD5(toSHA1(textPassword.getText().toString()));
         location = properCase(textLocation.getText().toString(), trLocale);
     }
 
@@ -149,10 +160,23 @@ public class RegisterActivity extends AppCompatActivity {
         user.setFirstName(firstName);
         user.setLastName(lastName);
         user.setMail(mail);
-        user.setPassword(toMD5(toSHA1(password)));
+        user.setPassword(password);
         user.setLocation(location);
 
         return UserDAO.insertUser(user);
+    }
+
+    private void registerUserToFirebase(String mail, String password) {
+        mAuth.createUserWithEmailAndPassword(mail, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if (!task.isSuccessful()) {
+                    String text = "Kayıt gerçekleşemedi.";
+
+                    showToast(text);
+                }
+            }
+        });
     }
 
     private boolean checkMail() {
