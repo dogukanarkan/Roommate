@@ -107,6 +107,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                     btnRegister.setEnabled(true);
 
+                    finish();
                     startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
                     break;
                 default:
