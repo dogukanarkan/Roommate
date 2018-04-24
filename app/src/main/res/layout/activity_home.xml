@@ -6,51 +6,90 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".HomeActivity"
-    android:orientation="horizontal">
+    android:orientation="vertical">
 
-    <Spinner
-        android:layout_width="125dp"
-        android:layout_height="34dp"
-        android:id="@+id/animalSpinner"
-        tools:layout_editor_absoluteX="130dp"
-        tools:layout_editor_absoluteY="0dp">
-    </Spinner>
+    <android.support.v4.widget.DrawerLayout
 
-    <Spinner
-        android:layout_width="125dp"
-        android:layout_height="34dp"
-        android:id="@+id/raceSpinner"
-        tools:layout_editor_absoluteX="255dp"
-        tools:layout_editor_absoluteY="0dp">
-    </Spinner>
-
-    <Spinner
-        android:layout_width="125dp"
-        android:layout_height="34dp"
-        android:id="@+id/genderSpinner"
-        tools:layout_editor_absoluteX="5dp"
-        tools:layout_editor_absoluteY="0dp">
-    </Spinner>
-    
-    <LinearLayout
+        android:id="@+id/man_app_bar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="41dp"
+        android:background="@color/colorPrimary"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+            
+        </LinearLayout>
+
+    </android.support.v4.widget.DrawerLayout>
+
+
+
+    <LinearLayout
+        android:layout_width="397dp"
+        android:layout_height="36dp"
         android:orientation="horizontal">
 
-       <HorizontalScrollView
-          android:layout_width="match_parent"
-          android:layout_height="364dp">
+        <Spinner
+            android:id="@+id/animalSpinner"
+            android:layout_width="127dp"
+            android:layout_height="34dp"
+            android:layout_gravity="center_vertical"
+            tools:layout_editor_absoluteX="130dp"
+            tools:layout_editor_absoluteY="0dp">
+        </Spinner>
 
-       </HorizontalScrollView>
+        <Spinner
+            android:id="@+id/raceSpinner"
+            android:layout_width="127dp"
+            android:layout_height="34dp"
+            android:layout_gravity="center_vertical"
+            android:textColor="@android:color/black"
+            tools:layout_editor_absoluteX="255dp"
+            tools:layout_editor_absoluteY="0dp">
+        </Spinner>
+
+        <Spinner
+            android:id="@+id/genderSpinner"
+            android:layout_width="127dp"
+            android:layout_height="34dp"
+            android:layout_gravity="center_vertical"
+            android:textColor="@android:color/black"
+            tools:layout_editor_absoluteX="5dp"
+            tools:layout_editor_absoluteY="0dp">
+        </Spinner>
+
     </LinearLayout>
 
-    <ListView
-        android:id="@+id/listView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_centerHorizontal="true">
 
-    </ListView>
+    <HorizontalScrollView
+        android:id="@+id/horizontalScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="427dp">
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+
+            <ListView
+                android:id="@+id/LVshowAnimal"
+                android:layout_width="380dp"
+                android:layout_height="480dp"></ListView>
+
+        </LinearLayout>
+
+
+    </HorizontalScrollView>
 
 
 </LinearLayout>
