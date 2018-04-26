@@ -5,11 +5,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
-import com.soundcloud.android.crop.Crop;
 
 public class RehomingActivity extends AppCompatActivity {
+
+    private Button mImageBtn;
 
     Spinner spinner;
     Spinner spinner2;
