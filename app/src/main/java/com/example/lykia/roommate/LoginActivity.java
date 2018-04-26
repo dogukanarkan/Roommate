@@ -39,6 +39,12 @@ public class LoginActivity extends AppCompatActivity {
     private String mail;
     private String password;
 
+    public void onClick(View v) {
+        startActivity(new Intent(LoginActivity.this, ForgotPasswordActivity.class));
+
+
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

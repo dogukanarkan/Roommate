@@ -24,7 +24,9 @@
         <activity
             android:name=".LoginActivity"
             android:parentActivityName=".MainActivity" />
-        <activity android:name=".ForgotPasswordActivity" />
+        <activity
+            android:name=".ForgotPasswordActivity"
+            android:parentActivityName=".LoginActivity" />
         <activity android:name=".VerificationPasswordActivity" />
         <activity android:name=".HomeActivity" />
         <activity android:name=".SearchActivity" />
