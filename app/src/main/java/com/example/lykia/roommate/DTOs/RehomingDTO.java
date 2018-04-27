@@ -1,6 +1,7 @@
 package com.example.lykia.roommate.DTOs;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 public class RehomingDTO {
 
@@ -12,7 +13,7 @@ public class RehomingDTO {
     private String gender;
     private int monthOld;
     private String information;
-    private Date additionDate;
+    private Timestamp additionDate;
 
     public RehomingDTO() {
     }
@@ -91,11 +92,11 @@ public class RehomingDTO {
         this.information = information;
     }
 
-    public Date getAdditionDate() {
+    public Timestamp getAdditionDate() {
         return additionDate;
     }
 
-    public void setAdditionDate(Date additionDate) {
+    public void setAdditionDate(Timestamp additionDate) {
         this.additionDate = additionDate;
     }
 }
