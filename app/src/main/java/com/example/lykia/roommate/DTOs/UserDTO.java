@@ -1,6 +1,6 @@
 package com.example.lykia.roommate.DTOs;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 
 public class UserDTO {
 
@@ -11,7 +11,7 @@ public class UserDTO {
     private String lastName;
     private String location;
     private String password;
-    private Date registerDate;
+    private Timestamp registerDate;
 
     public UserDTO() {
     }
@@ -81,11 +81,11 @@ public class UserDTO {
         this.password = password;
     }
 
-    public Date getRegisterDate() {
+    public Timestamp getRegisterDate() {
         return registerDate;
     }
 
-    public void setRegisterDate(Date registerDate) {
+    public void setRegisterDate(Timestamp registerDate) {
         this.registerDate = registerDate;
     }
 }
