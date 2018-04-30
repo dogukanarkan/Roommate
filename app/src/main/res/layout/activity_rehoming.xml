@@ -7,13 +7,34 @@
     tools:context=".RehomingActivity">
 
 
+    <Button
+        android:id="@+id/rehomingBtn"
+        android:layout_width="280dp"
+        android:layout_height="35dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="49dp"
+        android:background="@drawable/buttonshapes"
+        android:shadowColor="#8A6367"
+        android:shadowDx="0"
+        android:shadowDy="-1"
+        android:shadowRadius="5"
+        android:text="Sahiplendir"
+        android:textAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Title.Inverse"
+        android:textSize="25sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ek"
+        tools:ignore="MissingConstraints" />
+
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/userSingleImage"
         android:layout_width="138dp"
         android:layout_height="146dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="38dp"
+        android:layout_marginTop="21dp"
         android:src="@drawable/default_rehoming_icon" />
 
     <Spinner
@@ -43,16 +64,16 @@
         android:layout_marginBottom="239dp"></Spinner>
 
     <com.beardedhen.androidbootstrap.BootstrapEditText
-        android:id="@+id/yas"
+        android:id="@+id/ay"
         android:layout_width="280dp"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="180dp"
-        android:hint="yaş"
+        android:hint="Ay"
         app:bootstrapBrand="primary"
         app:bootstrapSize="md"
-        app:layout_constraintBottom_toTopOf="@+id/ozellik"
+        app:layout_constraintBottom_toTopOf="@+id/ek"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.101"
         app:layout_constraintStart_toStartOf="parent"
@@ -60,41 +81,40 @@
         tools:ignore="MissingConstraints" />
 
     <com.beardedhen.androidbootstrap.BootstrapEditText
-        android:id="@+id/ozellik"
+        android:id="@+id/ek"
         android:layout_width="280dp"
         android:layout_height="70dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="97dp"
-        android:hint="diğer"
+        android:hint="Ek"
         app:bootstrapBrand="primary"
         app:bootstrapSize="md"
         app:layout_constraintBottom_toTopOf="@+id/rehomingBtn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.101"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/yas"
+        app:layout_constraintTop_toBottomOf="@+id/ay"
         tools:ignore="MissingConstraints" />
 
     <Button
-        android:id="@+id/rehomingBtn"
+        android:id="@+id/addPhotoBtn"
         android:layout_width="280dp"
         android:layout_height="35dp"
-        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/userSingleImage"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="49dp"
         android:background="@drawable/buttonshapes"
         android:shadowColor="#8A6367"
         android:shadowDx="0"
         android:shadowDy="-1"
         android:shadowRadius="5"
-        android:text="Sahiplendir"
+        android:text="Fotoğraf Ekle"
         android:textAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Title.Inverse"
         android:textSize="25sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ozellik"
+        app:layout_constraintTop_toBottomOf="@+id/ek"
         tools:ignore="MissingConstraints" />
 
 
