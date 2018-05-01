@@ -176,7 +176,7 @@ public class RehomingDAO {
             statement.setString(5, pet.getGender());
             statement.setInt(6, pet.getMonthOld());
             statement.setString(7, pet.getInformation());
-            statement.setDate(8, pet.getAdditionDate());
+            statement.setTimestamp(8, pet.getAdditionDate());
             statement.setInt(9, pet.getPetId());
 
             result = statement.executeUpdate();
@@ -248,7 +248,7 @@ public class RehomingDAO {
         pet.setGender(resultSet.getString("gender"));
         pet.setMonthOld(resultSet.getInt("month_old"));
         pet.setInformation(resultSet.getString("information"));
-        pet.setAdditionDate(resultSet.getDate("addition_date"));
+        pet.setAdditionDate(resultSet.getTimestamp("addition_date"));
 
         return pet;
     }

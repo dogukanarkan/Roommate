@@ -172,7 +172,7 @@ public class UserDAO {
             statement.setString(4, user.getLastName());
             statement.setString(5, user.getLocation());
             statement.setString(6, user.getPassword());
-            statement.setDate(7, user.getRegisterDate());
+            statement.setTimestamp(7, user.getRegisterDate());
             statement.setInt(8, user.getUserId());
 
             result = statement.executeUpdate();
@@ -220,7 +220,7 @@ public class UserDAO {
         user.setLastName(resultSet.getString("last_name"));
         user.setLocation(resultSet.getString("location"));
         user.setPassword(resultSet.getString("password"));
-        user.setRegisterDate(resultSet.getDate("register_date"));
+        user.setRegisterDate(resultSet.getTimestamp("register_date"));
 
         return user;
     }

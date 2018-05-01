@@ -10,6 +10,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,16 +20,21 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.HashMap;
 import java.util.Locale;
 
 public class RegisterActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
+    private DatabaseReference mDatabase;
 
     private Button btnRegister;
     private EditText textFirstName;
@@ -39,6 +45,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     private String firstName;
     private String lastName;
+    private String fullName;
     private String mail;
     private String password;
     private String location;
@@ -75,7 +82,7 @@ public class RegisterActivity extends AppCompatActivity {
                 } else {
                     new Background().execute("checkMail", "registerUser");
 
-                    registerUserToFirebase(mail, password);
+                    registerUserToFirebase(fullName, mail, password);
                 }
             }
         });
@@ -137,6 +144,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         firstName = properCase(textFirstName.getText().toString(), trLocale);
         lastName = properCase(textLastName.getText().toString(), trLocale);
+        fullName = firstName + " " + lastName;
         mail = textMail.getText().toString().toLowerCase(trLocale);
         password = toMD5(toSHA1(textPassword.getText().toString()));
         location = properCase(textLocation.getText().toString(), trLocale);
@@ -166,11 +174,22 @@ public class RegisterActivity extends AppCompatActivity {
         return UserDAO.insertUser(user);
     }
 
-    private void registerUserToFirebase(String mail, String password) {
+    private void registerUserToFirebase(final String fullName, String mail, String password) {
         mAuth.createUserWithEmailAndPassword(mail, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
-                if (!task.isSuccessful()) {
+                if (task.isSuccessful()) {
+                    FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+                    String uid = currentUser.getUid();
+
+                    mDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(uid);
+
+                    HashMap<String, String> userMap = new HashMap<>();
+                    userMap.put("name", fullName);
+                    userMap.put("image", "default");
+
+                    mDatabase.setValue(userMap);
+                } else {
                     String text = "Kayıt gerçekleşemedi.";
 
                     showToast(text);

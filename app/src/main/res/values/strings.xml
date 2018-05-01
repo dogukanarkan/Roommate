@@ -1,23 +1,22 @@
 <resources>
     <string name="app_name">Roommate</string>
     <string name="bootstrapbutton">BootstrapButton</string>
-
-    <string-array name="Animals">
-        <item>Cat</item>
-        <item>Dog</item>
-        <item>Bird</item>
+    <string name="seçim"></string>
+    <string-array name="hayvan">
+        <item>Hayvan</item>
+        <item>Kedi</item>
+        <item>Köpek</item>
+        <item>Kuş</item>
     </string-array>
-
-    <string-array name="Races">
-        <item>British short hair</item>
-        <item>Golden</item>
-        <item>Buddy Bird</item>
+    <string-array name="tür">
+        <item>Tür</item>
+        <item>c</item>
+        <item>d</item>
     </string-array>
-
-    <string-array name="Genders">
-        <item>Female</item>
-        <item> Male</item>
+    <string-array name="cinsiyet">
+        <item>Cinsiyet</item>
+        <item>dişi</item>
+        <item>erkek</item>
     </string-array>
-
 
 </resources>

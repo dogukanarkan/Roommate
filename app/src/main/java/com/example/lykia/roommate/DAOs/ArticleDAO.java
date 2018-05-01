@@ -130,7 +130,7 @@ public class ArticleDAO {
         article.setImagePath(resultSet.getString("image_path"));
         article.setHeader(resultSet.getString("header"));
         article.setText(resultSet.getString("text"));
-        article.setAdditionDate(resultSet.getDate("addition_date"));
+        article.setAdditionDate(resultSet.getTimestamp("addition_date"));
 
         return article;
     }
