@@ -1,9 +1,89 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".UserProfileActivity">
 
-</android.support.constraint.ConstraintLayout>
+    <include
+        android:id="@+id/userProfileAppBar"
+        layout="@layout/app_bar_layout">
+    </include>
+
+    <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/profile_image"
+        android:layout_width="88dp"
+        android:layout_height="90dp"
+        android:layout_alignBottom="@+id/messageButton"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="22dp"
+        android:src="@drawable/logo"
+        app:civ_border_color="#000000"
+        app:civ_border_width="2dp" />
+
+    <TextView
+        android:id="@+id/textViewName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/messageButton"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="-108dp"
+        android:text="Hasan Yılmaz"
+        android:textColor="#000000" />
+
+    <TextView
+        android:id="@+id/textViewLocation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/textViewName"
+        android:layout_alignTop="@+id/messageButton"
+        android:text="Denizli" />
+
+    <Button
+        android:id="@+id/messageButton"
+        android:layout_width="78dp"
+        android:layout_height="44dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginEnd="17dp"
+        android:layout_marginTop="108dp"
+        android:background="@drawable/buttonshapes"
+        android:shadowColor="#8A6367"
+        android:shadowDx="0"
+        android:shadowDy="-1"
+        android:shadowRadius="5"
+        android:text="Mesaj"
+        android:textAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Title.Inverse"
+        android:textSize="15dp">
+    </Button>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignTop="@+id/_dynamic"
+        android:background="@android:color/darker_gray"
+        tools:ignore="UnknownId" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="399dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true">
+
+
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="397dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true"></ListView>
+
+
+    </ScrollView>
+
+
+
+
+</RelativeLayout>

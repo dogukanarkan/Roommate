@@ -11,15 +11,12 @@
         />
 
     <item
-        android:id="@+id/rehoming_item"
-        android:title="Sahiplendir"
-        app:showAsAction="never"
-        />
-
-    <item
         android:id="@+id/article_item"
         android:title="Yazılar"
         app:showAsAction="never"
         />
+    <item
+        android:id="@+id/rehoming_item"
+        android:title="Sahiplendir" />
 
 </menu>
