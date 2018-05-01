@@ -1,5 +1,6 @@
 package com.example.lykia.roommate;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -25,7 +26,7 @@ public class HomeActivity extends AppCompatActivity {
         spinnerCinsiyet=(Spinner)findViewById((R.id.genderSpinner));
         listViewAnimal=(ListView)findViewById(R.id.LVshowAnimal);
 
-        ArrayAdapter adapterHayvan = ArrayAdapter.createFromResource(this,R.array.Animals, android.R.layout.simple_spinner_item);
+        ArrayAdapter adapterHayvan = ArrayAdapter.createFromResource(this,R.array.hayvan, android.R.layout.simple_spinner_item);
         adapterHayvan.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerHayvan.setAdapter(adapterHayvan);
         spinnerHayvan.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -41,7 +42,7 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
-        ArrayAdapter adapterCins = ArrayAdapter.createFromResource(this,R.array.Races, android.R.layout.simple_spinner_item);
+        ArrayAdapter adapterCins = ArrayAdapter.createFromResource(this,R.array.tür, android.R.layout.simple_spinner_item);
         adapterCins.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerCins.setAdapter(adapterCins);
         spinnerHayvan.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -56,7 +57,7 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
-        ArrayAdapter adapterCinsiyet = ArrayAdapter.createFromResource(this,R.array.Genders, android.R.layout.simple_spinner_item);
+        ArrayAdapter adapterCinsiyet = ArrayAdapter.createFromResource(this,R.array.cinsiyet, android.R.layout.simple_spinner_item);
         adapterCinsiyet.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerCinsiyet.setAdapter(adapterCinsiyet);
         spinnerHayvan.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -73,7 +74,7 @@ public class HomeActivity extends AppCompatActivity {
 
 
 
-
+//        startActivity(new Intent(this, AnimalActivity.class));
     }
 
 }
