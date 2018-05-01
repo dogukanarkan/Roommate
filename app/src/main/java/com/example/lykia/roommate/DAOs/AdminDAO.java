@@ -53,7 +53,7 @@ public class AdminDAO {
             statement.setString(2, admin.getPassword());
             statement.setString(3, admin.getFirstName());
             statement.setString(4, admin.getLastName());
-            statement.setDate(5,admin.getRegisterDate());
+            statement.setTimestamp(5,admin.getRegisterDate());
             statement.setInt(6, admin.getAccountId());
 
             result = statement.executeUpdate();
@@ -76,8 +76,8 @@ public class AdminDAO {
         admin.setPassword(resultSet.getString("password"));
         admin.setFirstName(resultSet.getString("first_name"));
         admin.setLastName(resultSet.getString("last_name"));
-        admin.setRegisterDate(resultSet.getDate("register_date"));
-        admin.setLastLogin(resultSet.getDate("last_login"));
+        admin.setRegisterDate(resultSet.getTimestamp("register_date"));
+        admin.setLastLogin(resultSet.getTimestamp("last_login"));
 
         return admin;
     }
