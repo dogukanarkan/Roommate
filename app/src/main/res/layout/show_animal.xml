@@ -14,7 +14,7 @@
     <LinearLayout
         android:id="@+id/aboutAnimal"
         android:layout_width="wrap_content"
-        android:layout_height="264dp"
+        android:layout_height="262dp"
         android:orientation="vertical">
 
         <TextView
@@ -44,8 +44,7 @@
             android:shadowRadius="5"
             android:text="Mesaj"
             android:textAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Title.Inverse"
-            android:textSize="15dp">
-        </Button>
+            android:textSize="15dp"></Button>
 
     </LinearLayout>
 
