@@ -102,7 +102,7 @@ public class LoginActivity extends AppCompatActivity {
 
                 loginButton.setEnabled(true);
 
-                startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+                startActivity(new Intent(LoginActivity.this, HomeActivity.class).putExtra("userId", 2));
                 finish();
             } else {
                 text = "Giriş yapılamadı.\nBilgilerinizi kontrol ediniz.";
