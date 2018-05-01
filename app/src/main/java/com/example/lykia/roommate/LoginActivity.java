@@ -39,6 +39,8 @@ public class LoginActivity extends AppCompatActivity {
     private String mail;
     private String password;
 
+    private int id;
+
     public void onClick(View v) {
         startActivity(new Intent(LoginActivity.this, ForgotPasswordActivity.class));
 
@@ -102,7 +104,7 @@ public class LoginActivity extends AppCompatActivity {
 
                 loginButton.setEnabled(true);
 
-                startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+                startActivity(new Intent(LoginActivity.this, AllMessageActivity.class).putExtra("userId", id));
                 finish();
             } else {
                 text = "Giriş yapılamadı.\nBilgilerinizi kontrol ediniz.";
@@ -121,7 +123,13 @@ public class LoginActivity extends AppCompatActivity {
     private boolean loginUser() {
         UserDTO user = UserDAO.getUserForLogin(mail, password);
 
-        return user != null;
+        if (user != null) {
+            id = user.getUserId();
+
+            return true;
+        }
+
+        return false;
     }
 
     private void loginUserToFirebase(String mail, String password) {
