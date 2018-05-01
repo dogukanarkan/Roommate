@@ -4,17 +4,15 @@ public class FirebaseUsers {
 
     private String name;
     private String image;
+    private String thumbImage;
 
     public FirebaseUsers() {
     }
 
-    public FirebaseUsers(String name, String image) {
+    public FirebaseUsers(String name, String image, String thumbImage) {
         this.name = name;
         this.image = image;
-    }
-
-    public FirebaseUsers(String name) {
-        this.name = name;
+        this.thumbImage = thumbImage;
     }
 
     public String getName() {
@@ -31,5 +29,13 @@ public class FirebaseUsers {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public String getThumbImage() {
+        return thumbImage;
+    }
+
+    public void setThumbImage(String thumbImage) {
+        this.thumbImage = thumbImage;
     }
 }

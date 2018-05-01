@@ -9,16 +9,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
-import com.example.lykia.roommate.DAOs.AnimalDAO;
-import com.example.lykia.roommate.DAOs.UserDAO;
-import com.example.lykia.roommate.DTOs.AnimalDTO;
-import com.example.lykia.roommate.DTOs.RehomingDTO;
-import com.example.lykia.roommate.DTOs.UserDTO;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.squareup.picasso.Picasso;
 
-import java.util.List;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class AllMessageActivity extends AppCompatActivity {
 
@@ -42,8 +38,6 @@ public class AllMessageActivity extends AppCompatActivity {
         usersList = (RecyclerView) findViewById(R.id.allMessagesList);
         usersList.setHasFixedSize(true);
         usersList.setLayoutManager(new LinearLayoutManager(this));
-
-
     }
 
     @Override
@@ -51,11 +45,11 @@ public class AllMessageActivity extends AppCompatActivity {
         super.onStart();
 
         FirebaseRecyclerAdapter<FirebaseUsers, UsersViewHolder> adapter = new FirebaseRecyclerAdapter<FirebaseUsers, UsersViewHolder>(
-                FirebaseUsers.class, R.layout.users_single_layout, UsersViewHolder.class, mDatabase
-        ) {
+                FirebaseUsers.class, R.layout.users_single_layout, UsersViewHolder.class, mDatabase) {
             @Override
             protected void populateViewHolder(UsersViewHolder viewHolder, FirebaseUsers model, int position) {
                 viewHolder.setName(model.getName());
+                viewHolder.setImage(model.getThumbImage());
             }
         };
 
@@ -87,6 +81,12 @@ public class AllMessageActivity extends AppCompatActivity {
         public void setName(String name) {
             TextView userNameView = (TextView) view.findViewById(R.id.userSingleName);
             userNameView.setText(name);
+        }
+
+        public void setImage(String thumbImage) {
+            CircleImageView imageView = (CircleImageView) view.findViewById(R.id.userSingleImage);
+
+            Picasso.get().load(thumbImage).placeholder(R.drawable.person).into(imageView);
         }
     }
 }
