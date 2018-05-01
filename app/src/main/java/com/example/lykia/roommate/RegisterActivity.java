@@ -104,7 +104,6 @@ public class RegisterActivity extends AppCompatActivity {
             return result;
         }
 
-
         @Override
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
@@ -187,6 +186,7 @@ public class RegisterActivity extends AppCompatActivity {
                     HashMap<String, String> userMap = new HashMap<>();
                     userMap.put("name", fullName);
                     userMap.put("image", "default");
+                    userMap.put("thumbImage", "default");
 
                     mDatabase.setValue(userMap);
                 } else {
