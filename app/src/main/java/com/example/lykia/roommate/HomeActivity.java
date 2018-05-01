@@ -1,5 +1,6 @@
 package com.example.lykia.roommate;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -73,6 +74,6 @@ public class HomeActivity extends AppCompatActivity {
 
 
 
-
+//        startActivity(new Intent(this, AnimalActivity.class));
     }
 }

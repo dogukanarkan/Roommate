@@ -2,6 +2,7 @@
     <string name="app_name">Roommate</string>
     <string name="bootstrapbutton">BootstrapButton</string>
     <string name="seçim"></string>
+
     <string-array name="hayvan">
         <item>Hayvan</item>
         <item>Kedi</item>
