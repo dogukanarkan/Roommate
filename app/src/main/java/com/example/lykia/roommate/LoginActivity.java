@@ -103,8 +103,8 @@ public class LoginActivity extends AppCompatActivity {
                 showToast(text);
 
                 loginButton.setEnabled(true);
-              
-                startActivity(new Intent(LoginActivity.this, HomeActivity.class).putExtra("userId", id));
+
+                startActivity(new Intent(LoginActivity.this, AllMessageActivity.class).putExtra("userId", id));
                 finish();
             } else {
                 text = "Giriş yapılamadı.\nBilgilerinizi kontrol ediniz.";
