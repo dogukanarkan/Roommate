@@ -18,6 +18,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.lykia.roommate.DAOs.ArticleDAO;
 import com.example.lykia.roommate.DAOs.UserDAO;
 import com.example.lykia.roommate.DTOs.UserDTO;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -193,7 +194,7 @@ public class EditProfileActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 Uri resultUri = result.getUri();
                 File thumbFile = new File(resultUri.getPath());
-                Bitmap thumbImage = new Compressor(this).setMaxHeight(200).setMaxWidth(200).setQuality(75).compressToBitmap(thumbFile);
+                Bitmap thumbImage = new Compressor(this).setMaxHeight(150).setMaxWidth(150).setQuality(60).compressToBitmap(thumbFile);
 
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
                 thumbImage.compress(Bitmap.CompressFormat.JPEG, 100, stream);
@@ -212,7 +213,7 @@ public class EditProfileActivity extends AppCompatActivity {
                             uploadTask.addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
                                 @Override
                                 public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> thumbTask) {
-                                    String thumbDownloadUrl = thumbTask.getResult().getDownloadUrl().toString();
+                                    final String thumbDownloadUrl = thumbTask.getResult().getDownloadUrl().toString();
 
                                     if (thumbTask.isSuccessful()) {
                                         Map updateHashMap = new HashMap();
@@ -224,6 +225,8 @@ public class EditProfileActivity extends AppCompatActivity {
                                             @Override
                                             public void onComplete(@NonNull Task task) {
                                                 if (task.isSuccessful()) {
+                                                    new UpdateImagePath().execute(thumbDownloadUrl);
+
                                                     text = "Fotoğraf başarıyla güncellenmiştir.";
 
                                                     showToast(text);
@@ -290,6 +293,20 @@ public class EditProfileActivity extends AppCompatActivity {
         }
     }
 
+    public class UpdateImagePath extends AsyncTask<String, Void, Void> {
+        @Override
+        protected Void doInBackground(String... params) {
+            updateImagePath(params[0]);
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void voids) {
+            super.onPostExecute(voids);
+        }
+    }
+
     private void showToast(String text) {
         Context context = getApplicationContext();
         int duration = Toast.LENGTH_SHORT;
@@ -330,6 +347,14 @@ public class EditProfileActivity extends AppCompatActivity {
         UserDTO user = UserDAO.getUserById(id);
 
         user.setPassword(password);
+
+        return UserDAO.updateUser(user);
+    }
+
+    private boolean updateImagePath(String imagePath) {
+        UserDTO user = UserDAO.getUserById(id);
+
+        user.setImagePath(imagePath);
 
         return UserDAO.updateUser(user);
     }
