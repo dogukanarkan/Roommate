@@ -1,45 +1,47 @@
 package com.example.lykia.roommate;
 
-import android.content.Context;
-import android.database.DataSetObserver;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Adapter;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.EditText;
-import android.widget.ListAdapter;
-import android.widget.ListView;
-import android.widget.Toast;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 
-import java.util.ArrayList;
+import com.example.lykia.roommate.DAOs.UserDAO;
+import com.example.lykia.roommate.DTOs.UserDTO;
+
+import java.util.List;
 
 public class SearchActivity extends AppCompatActivity {
 
-    ListView lv;
-    String[] names = {"Hilal Erisev", "Doğukan Arkan", "Büşra Akgüller", "Tuğçe Yıldırım", "Hasan Yılmaz","Hilal Erisev", "Doğukan Arkan", "Büşra Akgüller", "Tuğçe Yıldırım", "Hasan Yılmaz","Hilal Erisev", "Doğukan Arkan", "Büşra Akgüller", "Tuğçe Yıldırım", "Hasan Yılmaz"};
-    int[] images = {R.drawable.hilal, R.drawable.dogukan1,R.drawable.busra,R.drawable.tugce,R.drawable.kisi,R.drawable.hilal, R.drawable.dogukan1,R.drawable.busra,R.drawable.tugce,R.drawable.kisi,R.drawable.hilal, R.drawable.dogukan1,R.drawable.busra,R.drawable.tugce,R.drawable.kisi};
+    private RecyclerView recyclerView;
+    private MyAdapter adapter;
+    private List<UserDTO> list;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
 
-        lv=(ListView)findViewById(R.id.liste);
+        recyclerView = (RecyclerView) findViewById(R.id.searchRecyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        Person adapter=new Person(this, names, images);
-        lv.setAdapter(adapter);
-        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int post, long l) {
+        new Background().execute();
+    }
 
-                Toast.makeText(getApplicationContext(),names[post],Toast.LENGTH_SHORT).show();
+    public class Background extends AsyncTask<Void, Void, Void> {
+        @Override
+        protected Void doInBackground(Void... voids) {
+            list = UserDAO.getAllUsers();
 
-            }
-        });
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void voids) {
+            super.onPostExecute(voids);
+
+            adapter = new MyAdapter(list);
+            recyclerView.setAdapter(adapter);
+        }
     }
 }
