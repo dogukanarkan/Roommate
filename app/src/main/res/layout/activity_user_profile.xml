@@ -5,7 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".UserProfileActivity">
+    tools:context=".UserProfileActivity"
+    android:background="#f2f2f2">
 
     <include
         android:id="@+id/userProfileAppBar"
@@ -63,27 +64,21 @@
         android:layout_width="match_parent"
         android:layout_height="5dp"
         android:layout_alignParentStart="true"
-        android:layout_alignTop="@+id/_dynamic"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="167dp"
         android:background="@android:color/darker_gray"
         tools:ignore="UnknownId" />
 
-    <ScrollView
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view_UserProfile"
         android:layout_width="match_parent"
-        android:layout_height="399dp"
+        android:layout_height="487dp"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true">
+        android:layout_alignParentStart="true"
+        android:orientation="vertical">
 
 
-        <ListView
-            android:layout_width="match_parent"
-            android:layout_height="397dp"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentStart="true"></ListView>
-
-
-    </ScrollView>
-
-
+    </android.support.v7.widget.RecyclerView>
 
 
 </RelativeLayout>
