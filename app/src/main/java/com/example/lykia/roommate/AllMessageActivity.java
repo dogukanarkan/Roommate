@@ -1,5 +1,6 @@
 package com.example.lykia.roommate;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -50,6 +51,15 @@ public class AllMessageActivity extends AppCompatActivity {
             protected void populateViewHolder(UsersViewHolder viewHolder, FirebaseUsers model, int position) {
                 viewHolder.setName(model.getName());
                 viewHolder.setImage(model.getThumbImage());
+
+                final String messageUserId = getRef(position).getKey();
+
+                viewHolder.view.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        startActivity(new Intent(AllMessageActivity.this, MessageActivity.class).putExtra("messageUserId", messageUserId));
+                    }
+                });
             }
         };
 
