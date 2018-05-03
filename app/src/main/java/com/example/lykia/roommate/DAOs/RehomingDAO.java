@@ -13,10 +13,11 @@ import java.util.List;
 
 public class RehomingDAO {
 
-    private static final String getRehomingPetByIdQuery = "SELECT * FROM Rehoming JOIN User ON Rehoming.owner_id = User.user_id JOIN Race ON Rehoming.race_id = Race.race_id WHERE pet_id = ?";
-    private static final String getRehomingPetsByOwnerIdQuery = "SELECT * FROM Rehoming JOIN User ON Rehoming.owner_id = User.user_id JOIN Race ON Rehoming.race_id = Race.race_id WHERE owner_id = ?";
-    private static final String getRehomingPetByCodeQuery = "SELECT * FROM Rehoming JOIN User ON Rehoming.owner_id = User.user_id JOIN Race ON Rehoming.race_id = Race.race_id WHERE code = ?";
-    private static final String getAllRehomingPetsQuery = "SELECT * FROM Rehoming JOIN User ON Rehoming.owner_id = User.user_id JOIN Race ON Rehoming.race_id = Race.race_id";
+    private static final String getRehomingPetByIdQuery = "SELECT * FROM Rehoming JOIN User ON Rehoming.owner_id = User.user_id JOIN Race ON Rehoming.race_id = Race.race_id JOIN Animal ON Race.animal_id = Animal.animal_id WHERE pet_id = ?";
+    private static final String getRehomingPetsByOwnerIdQuery = "SELECT * FROM Rehoming JOIN User ON Rehoming.owner_id = User.user_id JOIN Race ON Rehoming.race_id = Race.race_id JOIN Animal ON Race.animal_id = Animal.animal_id WHERE owner_id = ?";
+    private static final String getRehomingPetByCodeQuery = "SELECT * FROM Rehoming JOIN User ON Rehoming.owner_id = User.user_id JOIN Race ON Rehoming.race_id = Race.race_id JOIN Animal ON Race.animal_id = Animal.animal_id WHERE code = ?";
+    private static final String getAllRehomingPetsQuery = "SELECT * FROM Rehoming JOIN User ON Rehoming.owner_id = User.user_id JOIN Race ON Rehoming.race_id = Race.race_id JOIN Animal ON Race.animal_id = Animal.animal_id";
+    private static final String getRehomingCountQuery = "SELECT * FROM Rehoming ORDER BY pet_id DESC LIMIT 1";
     private static final String insertRehomingPetQuery = "INSERT INTO Rehoming(owner_id, race_id, code, image_path, gender, month_old, information, addition_date) VALUES(?, ?, ?, ?, ?, ?, ?, NOW())";
     private static final String updateRehomingPetQuery = "UPDATE Rehoming SET owner_id = ?, race_id = ?, code = ?, image_path = ?, gender = ?, month_old = ?, information = ?, addition_date = ? WHERE pet_id = ?";
     private static final String deleteRehomingPetByIdQuery = "DELETE FROM Rehoming WHERE pet_id = ?";
@@ -128,6 +129,29 @@ public class RehomingDAO {
         }
 
         return null;
+    }
+
+    public static int getRehomingCount() {
+
+        Connection connection = null;
+        Statement statement = null;
+
+        try {
+            connection = DatabaseOperations.openConnection();
+            statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(getRehomingCountQuery);
+
+            if (resultSet.next()) {
+                return resultSet.getInt("pet_id");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DatabaseOperations.closeStatement(statement);
+            DatabaseOperations.closeConnection(connection);
+        }
+
+        return 0;
     }
 
     public static boolean insertRehomingPet(RehomingDTO pet) {
