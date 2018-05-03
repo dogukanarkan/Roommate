@@ -1,18 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MessageActivity">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
+    <include
+        android:id="@+id/messageAppBar"
+        layout="@layout/app_bar_layout">
+    </include>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/messageRecycler"
+        android:layout_width="match_parent"
+        android:layout_height="550dp"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/messageAppBar"></android.support.v7.widget.RecyclerView>
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="131dp"
-        android:text="TextView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-</android.support.constraint.ConstraintLayout>
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:background="@android:color/white"
+        android:orientation="horizontal"
+        android:weightSum="10">
+
+        <EditText
+            android:id="@+id/messageSendText"
+            android:layout_width="334dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="8"
+            android:background="@android:color/white"
+            android:ems="10"
+            android:hint="Mesaj Yaz..."
+            android:inputType="textPersonName"
+            android:paddingBottom="12dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingTop="14dp" />
+
+        <ImageButton
+            android:id="@+id/messageSendButton"
+            android:layout_width="52dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:alpha="0.5"
+            android:background="@android:color/white"
+            app:srcCompat="@drawable/send" />
+    </LinearLayout>
+
+</RelativeLayout>
