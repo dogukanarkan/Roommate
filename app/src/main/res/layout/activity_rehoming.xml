@@ -6,6 +6,10 @@
     android:layout_height="match_parent"
     tools:context=".RehomingActivity">
 
+    <include
+        android:id="@+id/rehomingAppBar"
+        layout="@layout/app_bar_layout">
+    </include>
 
     <Button
         android:id="@+id/rehomingBtn"
@@ -34,7 +38,7 @@
         android:layout_height="146dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="21dp"
+        android:layout_marginTop="67dp"
         android:src="@drawable/default_rehoming_icon" />
 
     <Spinner
@@ -43,7 +47,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="211dp"
+        android:layout_marginTop="294dp"
 
         ></Spinner>
 
@@ -51,9 +55,9 @@
         android:id="@+id/spinner2"
         android:layout_width="280dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
+        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="255dp"></Spinner>
+        android:layout_marginBottom="289dp"></Spinner>
 
     <Spinner
         android:id="@+id/spinner3"
@@ -101,8 +105,9 @@
         android:id="@+id/addPhotoBtn"
         android:layout_width="280dp"
         android:layout_height="35dp"
-        android:layout_below="@+id/userSingleImage"
+        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="238dp"
         android:background="@drawable/buttonshapes"
         android:shadowColor="#8A6367"
         android:shadowDx="0"
