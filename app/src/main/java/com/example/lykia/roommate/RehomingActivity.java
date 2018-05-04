@@ -155,7 +155,7 @@ public class RehomingActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 resultUri = result.getUri();
                 File thumbFile = new File(resultUri.getPath());
-                Bitmap thumbImage = new Compressor(this).setMaxHeight(200).setMaxWidth(200).setQuality(75).compressToBitmap(thumbFile);
+                Bitmap thumbImage = new Compressor(this).setMaxHeight(100).setMaxWidth(100).setQuality(30).compressToBitmap(thumbFile);
 
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
                 thumbImage.compress(Bitmap.CompressFormat.JPEG, 100, stream);
@@ -169,7 +169,8 @@ public class RehomingActivity extends AppCompatActivity {
 
                 StorageReference filePath = imageStorage.child("animalImages").child(rehomingId + ".jpg");
 
-                filePath.putFile(resultUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+                UploadTask uploadTask = filePath.putBytes(thumbByte);
+                uploadTask.addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
                         if (task.isSuccessful()) {
