@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_gravity="start"
+    android:background="@color/bootstrap_brand_primary"
+    android:elevation="4dp"
+    android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+    <item
+        android:id="@+id/log_out"
+        android:icon="@drawable/exit"
+        android:title="Çıkış Yap"
+        app:showAsAction="always" />
+
+</menu>

@@ -5,23 +5,28 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".AddArticleActivity">
+
+    <include
+        android:id="@+id/addArticleAppBar"
+        layout="@layout/app_bar_layout">
+    </include>
+
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/userSingleImage"
-        android:layout_width="138dp"
-        android:layout_height="146dp"
+        android:id="@+id/articleImage"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="21dp"
+        android:layout_marginTop="112dp"
         android:src="@drawable/default_rehoming_icon" />
 
-
     <Button
-        android:id="@+id/addPhotoBtn"
+        android:id="@+id/addImageButton"
         android:layout_width="280dp"
         android:layout_height="35dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="194dp"
+        android:layout_marginTop="287dp"
         android:background="@drawable/buttonshapes"
         android:shadowColor="#8A6367"
         android:shadowDx="0"
@@ -31,53 +36,52 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Title.Inverse"
         android:textSize="25sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/titleText"
+        app:layout_constraintBottom_toTopOf="@+id/headerEditText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         tools:ignore="MissingConstraints" />
 
     <com.beardedhen.androidbootstrap.BootstrapEditText
-        android:id="@+id/titleText"
+        android:id="@+id/headerEditText"
         android:layout_width="280dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
+        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="250dp"
+        android:layout_marginBottom="258dp"
         android:hint="Başlık"
         app:bootstrapBrand="primary"
         app:bootstrapSize="md"
-        app:layout_constraintBottom_toTopOf="@+id/articleText"
+        app:layout_constraintBottom_toTopOf="@+id/articleEditText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.101"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addPhotoBtn"
+        app:layout_constraintTop_toBottomOf="@+id/addImageButton"
         tools:ignore="MissingConstraints" />
 
     <com.beardedhen.androidbootstrap.BootstrapEditText
-        android:id="@+id/articleText"
+        android:id="@+id/articleEditText"
         android:layout_width="280dp"
         android:layout_height="180dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="83dp"
+        android:layout_marginBottom="64dp"
         android:hint="Metin"
         app:bootstrapBrand="primary"
         app:bootstrapSize="md"
-        app:layout_constraintBottom_toTopOf="@+id/addArticleBtn"
+        app:layout_constraintBottom_toTopOf="@+id/addArticleButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.101"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/titleText"
+        app:layout_constraintTop_toBottomOf="@+id/headerEditText"
         tools:ignore="MissingConstraints" />
 
-
     <Button
-        android:id="@+id/addArticleBtn"
+        android:id="@+id/addArticleButton"
         android:layout_width="280dp"
         android:layout_height="35dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="35dp"
+        android:layout_marginBottom="20dp"
         android:background="@drawable/buttonshapes"
         android:shadowColor="#8A6367"
         android:shadowDx="0"
@@ -89,10 +93,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/articleText"
+        app:layout_constraintTop_toBottomOf="@+id/articleEditText"
         tools:ignore="MissingConstraints" />
-
-
-
 
 </RelativeLayout>
