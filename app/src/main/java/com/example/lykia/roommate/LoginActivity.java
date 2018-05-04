@@ -15,7 +15,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.lykia.roommate.DAOs.AdminDAO;
 import com.example.lykia.roommate.DAOs.UserDAO;
+import com.example.lykia.roommate.DTOs.AdminDTO;
 import com.example.lykia.roommate.DTOs.UserDTO;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -79,39 +81,60 @@ public class LoginActivity extends AppCompatActivity {
                     password = toMD5(toSHA1(textPassword.getText().toString()));
 
                     new Background().execute();
-
-                    loginUserToFirebase(mail, password);
                 }
             }
         });
     }
 
-    public class Background extends AsyncTask<Void, Void, Boolean> {
+    public class Background extends AsyncTask<Void, Void, String> {
         @Override
-        protected Boolean doInBackground(Void... voids) {
-            return loginUser();
+        protected String doInBackground(Void... voids) {
+            if (loginUser()) {
+                return "user";
+            } else if (loginAdmin()) {
+                return "admin";
+            }
+
+            return null;
         }
 
         @Override
-        protected void onPostExecute(Boolean result) {
+        protected void onPostExecute(String result) {
             super.onPostExecute(result);
             String text;
 
-            if (result) {
+            if (result == null) {
+                loginProgress.dismiss();
+
+                text = "Giriş yapılamadı.\nBilgilerinizi kontrol ediniz.";
+
+                showToast(text);
+
+                loginButton.setEnabled(true);
+            } else if (result.equals("user")) {
+                loginProgress.dismiss();
+
                 text = "Başarıyla giriş yapıldı.";
 
                 showToast(text);
 
                 loginButton.setEnabled(true);
 
-                startActivity(new Intent(LoginActivity.this, EditProfileActivity.class).putExtra("userId", id));
+                loginUserToFirebase(mail, password);
+
+                startActivity(new Intent(LoginActivity.this, HomeActivity.class).putExtra("userId", id));
                 finish();
-            } else {
-                text = "Giriş yapılamadı.\nBilgilerinizi kontrol ediniz.";
+            } else if (result.equals("admin")) {
+                loginProgress.dismiss();
+
+                text = "Başarıyla giriş yapıldı.";
 
                 showToast(text);
 
                 loginButton.setEnabled(true);
+
+                startActivity(new Intent(LoginActivity.this, AddArticleActivity.class).putExtra("adminId", id));
+                finish();
             }
         }
     }
@@ -132,17 +155,21 @@ public class LoginActivity extends AppCompatActivity {
         return false;
     }
 
+    private boolean loginAdmin() {
+        AdminDTO admin = AdminDAO.getAdminForLogin(mail, password);
+
+        if (admin != null) {
+            id = admin.getAccountId();
+            AdminDAO.updateAdmin(admin);
+
+            return true;
+        }
+
+        return false;
+    }
+
     private void loginUserToFirebase(String mail, String password) {
-        mAuth.signInWithEmailAndPassword(mail, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if (task.isSuccessful()) {
-                    loginProgress.dismiss();
-                } else {
-                    loginProgress.hide();
-                }
-            }
-        });
+        mAuth.signInWithEmailAndPassword(mail, password);
     }
 
     private void showToast(String text) {
