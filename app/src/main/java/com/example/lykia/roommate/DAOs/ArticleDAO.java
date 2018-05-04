@@ -15,7 +15,9 @@ public class ArticleDAO {
 
     private static final String getArticleByIdQuery = "SELECT * FROM Article JOIN Admin ON Article.addition_id = Admin.account_id WHERE article_id = ?";
     private static final String getAllArticlesQuery = "SELECT * FROM Article JOIN Admin ON Article.addition_id = Admin.account_id";
+    private static final String getArticleCountQuery = "SELECT * FROM Article ORDER BY article_id DESC LIMIT 1";
     private static final String insertArticleQuery = "INSERT INTO Article(addition_id, image_path, header, text, addition_date) VALUES(?, ?, ?, ?, NOW())";
+    private static final String updateArticleQuery = "UPDATE Article SET addition_id = ?, image_path = ?, header = ?, text = ?, addition_date = ? WHERE article_id = ?";
     private static final String deleteArticleQuery = "DELETE FROM Article WHERE article_id = ?";
 
     public static ArticleDTO getArticleById(int id) {
@@ -72,6 +74,29 @@ public class ArticleDAO {
         return null;
     }
 
+    public static int getArticleCount() {
+
+        Connection connection = null;
+        Statement statement = null;
+
+        try {
+            connection = DatabaseOperations.openConnection();
+            statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(getArticleCountQuery);
+
+            if (resultSet.next()) {
+                return resultSet.getInt("article_id");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DatabaseOperations.closeStatement(statement);
+            DatabaseOperations.closeConnection(connection);
+        }
+
+        return 0;
+    }
+
     public static boolean insertArticle(ArticleDTO article) {
 
         Connection connection = null;
@@ -86,6 +111,34 @@ public class ArticleDAO {
             statement.setString(2, article.getImagePath());
             statement.setString(3, article.getHeader());
             statement.setString(4, article.getText());
+
+            result = statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DatabaseOperations.closeStatement(statement);
+            DatabaseOperations.closeConnection(connection);
+        }
+
+        return result == 1;
+    }
+
+    public static boolean updateArticle(ArticleDTO article) {
+
+        Connection connection = null;
+        PreparedStatement statement = null;
+        int result = 0;
+
+        try {
+            connection = DatabaseOperations.openConnection();
+            statement = connection.prepareStatement(updateArticleQuery);
+
+            statement.setInt(1, article.getAdmin().getAccountId());
+            statement.setString(2, article.getImagePath());
+            statement.setString(3, article.getHeader());
+            statement.setString(4, article.getText());
+            statement.setTimestamp(5, article.getAdditionDate());
+            statement.setInt(6, article.getArticleId());
 
             result = statement.executeUpdate();
         } catch (SQLException e) {
