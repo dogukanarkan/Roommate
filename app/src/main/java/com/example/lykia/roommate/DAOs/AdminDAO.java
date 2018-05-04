@@ -11,7 +11,8 @@ import java.sql.SQLException;
 public class AdminDAO {
 
     private static final String getAdminByIdQuery = "SELECT * FROM Admin WHERE account_id = ?";
-    private static final String updateAdminQuery = "UPDATE Admin SET username = ?, password = ?, first_name = ?, last_name = ?, register_date = ?, last_login = NOW() WHERE admin_id = ?";
+    private static final String getAdminForLoginQuery = "SELECT * FROM Admin WHERE username = ? AND password = ?";
+    private static final String updateAdminQuery = "UPDATE Admin SET username = ?, password = ?, first_name = ?, last_name = ?, register_date = ?, last_login = NOW() WHERE account_id = ?";
 
     public static AdminDTO getAdminById(int id) {
 
@@ -23,6 +24,33 @@ public class AdminDAO {
             statement = connection.prepareStatement(getAdminByIdQuery);
 
             statement.setInt(1, id);
+
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                return extractAdminFromResultSet(resultSet);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DatabaseOperations.closeStatement(statement);
+            DatabaseOperations.closeConnection(connection);
+        }
+
+        return null;
+    }
+
+    public static AdminDTO getAdminForLogin(String mail, String hashPassword) {
+
+        Connection connection = null;
+        PreparedStatement statement = null;
+
+        try {
+            connection = DatabaseOperations.openConnection();
+            statement = connection.prepareStatement(getAdminForLoginQuery);
+
+            statement.setString(1, mail);
+            statement.setString(2, hashPassword);
 
             ResultSet resultSet = statement.executeQuery();
 
