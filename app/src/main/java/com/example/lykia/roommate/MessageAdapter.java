@@ -1,6 +1,5 @@
 package com.example.lykia.roommate;
 
-import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,14 +39,16 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 
     public class MessageViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView messageText;
         public CircleImageView profileImage;
+        public TextView displayName;
+        public TextView messageText;
 
         public MessageViewHolder(View view) {
             super(view);
 
-            messageText = (TextView) view.findViewById(R.id.messageTextLayout);
             profileImage = (CircleImageView) view.findViewById(R.id.messageImageLayout);
+            displayName = (TextView) view.findViewById(R.id.messageDisplayName);
+            messageText = (TextView) view.findViewById(R.id.messageTextLayout);
         }
     }
 
@@ -56,15 +57,25 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
         auth = FirebaseAuth.getInstance();
         String currentUserId = auth.getCurrentUser().getUid();
         Messages message = messageList.get(i);
-
         String fromUser = message.getFrom();
 
-        if (fromUser.equals(currentUserId)) {
-            viewHolder.messageText.setBackgroundColor(Color.WHITE);
-            viewHolder.messageText.setTextColor(Color.BLACK);
-        } else {
-            viewHolder.messageText.setTextColor(Color.WHITE);
-        }
+        DatabaseReference dr = FirebaseDatabase.getInstance().getReference().child("Users").child(fromUser);
+
+        dr.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String name = dataSnapshot.child("name").getValue().toString();
+                String image = dataSnapshot.child("thumbImage").getValue().toString();
+
+                viewHolder.displayName.setText(name);
+                Picasso.get().load(image).placeholder(R.drawable.person).into(viewHolder.profileImage);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
         viewHolder.messageText.setText(message.getMessage());
     }
