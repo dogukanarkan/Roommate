@@ -44,7 +44,7 @@ public class UserProfileActivity extends AppCompatActivity {
         userId = getIntent().getStringExtra("userId");
         test.setText(userId);
 
-        recyclerView = (RecyclerView) findViewById(R.id.recycler_view_UserProfile);
+        recyclerView =findViewById(R.id.recycler_view_UserProfile);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         new Background().execute();
