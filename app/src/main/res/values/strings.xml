@@ -2,9 +2,9 @@
     <string name="app_name">Roommate</string>
     <string name="bootstrapbutton">BootstrapButton</string>
     <string name="seçim"></string>
+  
     <string name="item_home">Home</string>
     <string name="item_search">Search</string>
-    <string name="tem_profile" />
     <string name="item_profile">Profile</string>
 
     <string-array name="cinsiyet">
@@ -12,5 +12,9 @@
         <item>Dişi</item>
         <item>Erkek</item>
     </string-array>
+    <string name="app_name_navigation">NavigationApp</string>
+    <string name="open">Open</string>
+    <string name="close">Close</string>
+
 
 </resources>

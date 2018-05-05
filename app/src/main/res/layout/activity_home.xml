@@ -8,72 +8,49 @@
     tools:context=".HomeActivity"
     android:orientation="vertical">
 
-    <android.support.v4.widget.DrawerLayout
-
-        android:id="@+id/man_app_bar"
-        android:layout_width="match_parent"
-        android:layout_height="41dp"
-        android:background="@color/colorPrimary"
-        android:elevation="4dp"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <TextView
-                android:id="@+id/textView"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent" />
-            
-        </LinearLayout>
-
-    </android.support.v4.widget.DrawerLayout>
-
-
+    <include
+        android:id="@+id/homeAppBar"
+        layout="@layout/app_bar_layout">
+    </include>
 
     <LinearLayout
-        android:layout_width="397dp"
+        android:layout_width="match_parent"
         android:layout_height="36dp"
         android:orientation="horizontal">
 
         <Spinner
             android:id="@+id/animalSpinner"
-            android:layout_width="127dp"
+            android:layout_width="123dp"
             android:layout_height="34dp"
             android:layout_gravity="center_vertical"
             android:textColor="@android:color/black"
             tools:layout_editor_absoluteX="130dp"
-            tools:layout_editor_absoluteY="0dp">
-        </Spinner>
+            tools:layout_editor_absoluteY="0dp"></Spinner>
 
         <Spinner
             android:id="@+id/raceSpinner"
-            android:layout_width="132dp"
+            android:layout_width="127dp"
             android:layout_height="34dp"
             android:layout_gravity="center_vertical"
             android:textColor="@android:color/black"
             tools:layout_editor_absoluteX="255dp"
-            tools:layout_editor_absoluteY="0dp">
-        </Spinner>
+            tools:layout_editor_absoluteY="0dp"></Spinner>
 
         <Spinner
             android:id="@+id/genderSpinner"
-            android:layout_width="125dp"
+            android:layout_width="99dp"
             android:layout_height="34dp"
             android:layout_gravity="center_vertical"
             android:textColor="@android:color/black"
             tools:layout_editor_absoluteX="5dp"
-            tools:layout_editor_absoluteY="0dp">
-        </Spinner>
+            tools:layout_editor_absoluteY="0dp"></Spinner>
 
     </LinearLayout>
 
-
-    <HorizontalScrollView
-        android:id="@+id/horizontalScrollView"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_viewHomePage"
         android:layout_width="match_parent"
+
         android:layout_height="520dp">
 
 
@@ -101,7 +78,7 @@
         app:menu="@menu/nav_item">
 
     </android.support.design.widget.BottomNavigationView>
-
-
+        android:layout_height="530dp"
+        android:scrollbars="vertical" />
 
 </LinearLayout>
