@@ -19,7 +19,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_centerVertical="true"
-        android:text="TextView"
         android:textColor="@android:color/white"
         android:textSize="18sp" />
 
