@@ -78,7 +78,7 @@ public class UserProfileActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     startActivity(new Intent(UserProfileActivity.this, MessageActivity.class)
-                            .putExtra("messageUserId", pets.get(position).getUser().getUserId()));
+                            .putExtra("messageUserMail", pets.get(position).getUser().getMail()));
                 }
             });
 

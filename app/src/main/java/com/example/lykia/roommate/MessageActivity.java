@@ -26,6 +26,9 @@ import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -87,44 +90,58 @@ public class MessageActivity extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
         currentUserId = auth.getCurrentUser().getUid();
 
-        loadMessage();
+        String messageUserMail = getIntent().getStringExtra("messageUserMail");
 
-        databaseReference.child("Users").child(messageUserId).addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReference.child("Mails").child(toMD5(messageUserMail)).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                String chatImage = dataSnapshot.child("thumbImage").getValue().toString();
-                String chatUsername = dataSnapshot.child("name").getValue().toString();
+                messageUserId = dataSnapshot.child("userId").getValue().toString();
 
-                name.setText(chatUsername);
-                Picasso.get().load(chatImage).placeholder(R.drawable.person).into(image);
-            }
+                loadMessage();
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
+                databaseReference.child("Users").child(messageUserId).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        String chatImage = dataSnapshot.child("thumbImage").getValue().toString();
+                        String chatUsername = dataSnapshot.child("name").getValue().toString();
 
-            }
-        });
+                        name.setText(chatUsername);
+                        Picasso.get().load(chatImage).placeholder(R.drawable.person).into(image);
+                    }
 
-        databaseReference.child("Chat").child(currentUserId).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if (!dataSnapshot.hasChild(messageUserId)) {
-                    Map chatAddMap = new HashMap();
-                    chatAddMap.put("timestamp", ServerValue.TIMESTAMP);
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
 
-                    Map chatUserMap = new HashMap();
-                    chatUserMap.put("Chat/" + currentUserId + "/" + messageUserId, chatAddMap);
-                    chatUserMap.put("Chat/" + messageUserId + "/" + currentUserId, chatAddMap);
+                    }
+                });
 
-                    databaseReference.updateChildren(chatUserMap, new DatabaseReference.CompletionListener() {
-                        @Override
-                        public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
-                            if (databaseError != null) {
-                                Log.d("CHAT_LOG", databaseError.getMessage().toString());
-                            }
+                databaseReference.child("Chat").child(currentUserId).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        if (!dataSnapshot.hasChild(messageUserId)) {
+                            Map chatAddMap = new HashMap();
+                            chatAddMap.put("timestamp", ServerValue.TIMESTAMP);
+
+                            Map chatUserMap = new HashMap();
+                            chatUserMap.put("Chat/" + currentUserId + "/" + messageUserId, chatAddMap);
+                            chatUserMap.put("Chat/" + messageUserId + "/" + currentUserId, chatAddMap);
+
+                            databaseReference.updateChildren(chatUserMap, new DatabaseReference.CompletionListener() {
+                                @Override
+                                public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                                    if (databaseError != null) {
+                                        Log.d("CHAT_LOG", databaseError.getMessage().toString());
+                                    }
+                                }
+                            });
                         }
-                    });
-                }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
             }
 
             @Override
@@ -217,5 +234,20 @@ public class MessageActivity extends AppCompatActivity {
         }
 
         return true;
+    }
+
+    private String toMD5(String input) {
+        String hashPassword = null;
+
+        try {
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            md.update(input.getBytes(), 0, input.length());
+
+            hashPassword = new BigInteger(1, md.digest()).toString(16);
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+
+        return hashPassword;
     }
 }
