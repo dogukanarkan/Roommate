@@ -1,51 +1,139 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center_vertical">
 
-    <ImageView
-        android:id="@+id/animalImage"
-        android:layout_width="365dp"
-        android:layout_height="174dp"
-        android:layout_margin="10dp" />
 
-    <LinearLayout
-        android:id="@+id/aboutAnimal"
-        android:layout_width="wrap_content"
-        android:layout_height="262dp"
-        android:orientation="vertical">
+    <android.support.v7.widget.CardView
 
-        <TextView
-            android:id="@+id/textArticle"
-            android:layout_width="384dp"
-            android:layout_height="36dp"
-            android:layout_margin="2dp" />
+        android:layout_width="match_parent"
+        android:layout_height="462dp"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true">
 
-        <TextView
-            android:id="@+id/textTitle"
-            android:layout_width="398dp"
-            android:layout_height="170dp"
-            android:layout_margin="2dp" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
 
-        <Button
-            android:id="@+id/messageButton"
-            android:layout_width="78dp"
-            android:layout_height="44dp"
-            android:layout_marginBottom="30dp"
-            android:layout_marginEnd="25dp"
-            android:layout_marginStart="25dp"
-            android:background="@drawable/buttonshapes"
-            android:shadowColor="#8A6367"
-            android:shadowDx="0"
-            android:shadowDy="-1"
-            android:shadowRadius="5"
-            android:text="Mesaj"
-            android:textAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Title.Inverse"
-            android:textSize="15dp"></Button>
+            <ImageView
+                android:id="@+id/animalImage"
+                android:layout_width="232dp"
+                android:layout_height="155dp"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="17dp" />
 
-    </LinearLayout>
 
-</LinearLayout>
+            <TextView
+                android:id="@+id/textView8"
+                android:layout_width="99dp"
+                android:layout_height="35dp"
+                android:layout_below="@+id/animalImage"
+                android:layout_toStartOf="@+id/textRace"
+                android:text="Hayvan:"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textView7"
+                android:layout_width="99dp"
+                android:layout_height="35dp"
+                android:layout_above="@+id/textView6"
+                android:layout_alignStart="@+id/textView8"
+                android:text="Yaş:"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="99dp"
+                android:layout_height="35dp"
+                android:layout_alignStart="@+id/textView8"
+                android:layout_below="@+id/textMonth"
+                android:text="Referans Kodu:"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textView5"
+                android:layout_width="99dp"
+                android:layout_height="35dp"
+                android:layout_below="@+id/textRace"
+                android:layout_toStartOf="@+id/textRace"
+                android:text="Cinsiyet:"
+                android:textStyle="bold" />
+
+
+            <TextView
+                android:id="@+id/textAnimal"
+                android:layout_width="232dp"
+                android:layout_height="35dp"
+                android:layout_alignEnd="@+id/messageButton"
+                android:layout_below="@+id/animalImage"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textRace"
+                android:layout_width="232dp"
+                android:layout_height="35dp"
+                android:layout_alignEnd="@+id/messageButton"
+                android:layout_below="@+id/textAnimal"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textGender"
+                android:layout_width="232dp"
+                android:layout_height="35dp"
+                android:layout_alignStart="@+id/textRace"
+                android:layout_below="@+id/textRace"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textMonth"
+                android:layout_width="232dp"
+                android:layout_height="35dp"
+                android:layout_alignStart="@+id/textRace"
+                android:layout_below="@+id/textGender"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textRefCode"
+                android:layout_width="232dp"
+                android:layout_height="35dp"
+                android:layout_below="@+id/textMonth"
+                android:layout_toEndOf="@+id/textView8"
+                android:textStyle="bold" />
+
+
+            <Button
+                android:id="@+id/messageButton"
+                android:layout_width="78dp"
+                android:layout_height="41dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginBottom="104dp"
+                android:layout_marginEnd="42dp"
+                android:background="@drawable/buttonshapes"
+                android:shadowColor="#8A6367"
+                android:shadowDx="0"
+                android:shadowDy="-1"
+                android:shadowRadius="5"
+                android:text="Mesaj"
+                android:textAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Title.Inverse"
+                android:textSize="15dp">
+            </Button>
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="99dp"
+                android:layout_height="35dp"
+                android:layout_alignTop="@+id/textRace"
+                android:layout_toStartOf="@+id/textRace"
+                android:text="Cins:"
+                android:textStyle="bold" />
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+
+</RelativeLayout>
