@@ -8,6 +8,11 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -58,22 +63,14 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
             viewHolder.messageText.setBackgroundColor(Color.WHITE);
             viewHolder.messageText.setTextColor(Color.BLACK);
         } else {
-            viewHolder.messageText.setBackgroundResource(R.drawable.message_text_background);
             viewHolder.messageText.setTextColor(Color.WHITE);
         }
 
         viewHolder.messageText.setText(message.getMessage());
-        Picasso.get().load("www.").placeholder(R.drawable.person).into(viewHolder.profileImage);
     }
 
     @Override
     public int getItemCount() {
         return messageList.size();
     }
-
-
-
-
-
-
 }
