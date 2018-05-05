@@ -7,17 +7,17 @@
     android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
     >
 
-    <item
-        android:id="@+id/message_item"
-        android:icon="@drawable/message_icon"
-        android:title="Mesajlar"
-        app:showAsAction="always"
-        />
-    <item android:id="@+id/nav_article"
-        android:title="Makaleler"
+    <item android:id="@+id/rehoming_nav"
+        android:title="Sahiplendirme"
         />
 
-    <item android:id="@+id/nav_rehoming"
-        android:title="Sahiplendir"
+    <item android:id="@+id/article_nav"
+        android:title="Bilgilendirme Yazıları"
+        />
+    <item android:id="@+id/edit_profile_nav"
+        android:title="Profili Düzenle"
+        />
+    <item android:id="@+id/logout_nav"
+        android:title="Çıkış"
         />
 </menu>
