@@ -74,7 +74,7 @@
     <HorizontalScrollView
         android:id="@+id/horizontalScrollView"
         android:layout_width="match_parent"
-        android:layout_height="427dp">
+        android:layout_height="520dp">
 
 
         <LinearLayout
@@ -85,13 +85,23 @@
             <ListView
                 android:id="@+id/LVshowAnimal"
                 android:layout_width="380dp"
-                android:layout_height="480dp">
-            </ListView>
+                android:layout_height="480dp"></ListView>
 
         </LinearLayout>
 
 
     </HorizontalScrollView>
+    <android.support.design.widget.BottomNavigationView
+        android:id="@+id/bottomBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="-55dp"
+        app:itemIconTint="@color/nav_item_colors"
+        app:itemTextColor="@color/nav_item_colors"
+        app:menu="@menu/nav_item">
+
+    </android.support.design.widget.BottomNavigationView>
+
 
 
 </LinearLayout>
