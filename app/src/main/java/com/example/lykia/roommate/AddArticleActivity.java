@@ -86,7 +86,7 @@ public class AddArticleActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 File thumbFile = new File(resultUri.getPath());
-                Bitmap thumbImage = new Compressor(AddArticleActivity.this).setMaxHeight(100).setMaxWidth(100).setQuality(30).compressToBitmap(thumbFile);
+                Bitmap thumbImage = new Compressor(AddArticleActivity.this).setMaxHeight(160).setMaxWidth(90).setQuality(50).compressToBitmap(thumbFile);
 
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
                 thumbImage.compress(Bitmap.CompressFormat.JPEG, 100, stream);
@@ -121,7 +121,7 @@ public class AddArticleActivity extends AppCompatActivity {
         if (requestCode == 1 && resultCode == RESULT_OK) {
             Uri imageUri = data.getData();
             CropImage.activity(imageUri)
-                    .setAspectRatio(1, 1)
+                    .setAspectRatio(16, 9)
                     .start(this);
         }
 
