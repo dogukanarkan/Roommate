@@ -2,6 +2,9 @@ package com.example.lykia.roommate;
 
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.support.annotation.NonNull;
+import android.support.design.internal.BottomNavigationItemView;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,6 +12,8 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -24,7 +29,7 @@ import java.util.List;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class SearchActivity extends AppCompatActivity {
-
+    private BottomNavigationView navButton;
     private RecyclerView recyclerView;
     private MyAdapter adapter;
     private List<UserDTO> list;
@@ -36,9 +41,31 @@ public class SearchActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
 
-        SearchEditText=(EditText)findViewById(R.id.editText);
+        SearchEditText = (EditText) findViewById(R.id.editText);
         recyclerView = (RecyclerView) findViewById(R.id.searchRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        navButton = (BottomNavigationView) findViewById(R.id.bottomBar);
+        navButton.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.home_nav:
+                        Intent intent = new Intent(SearchActivity.this, HomeActivity.class);
+                        startActivity(intent);
+                        break;
+                    case R.id.search_nav:
+                        Intent inten1=new Intent(SearchActivity.this,SearchActivity.class);
+                        startActivity(inten1);
+                        break;
+                    case R.id.profile_nav:
+                        Intent intent2=new Intent(SearchActivity.this,OwnProfileActivity.class);
+                        startActivity(intent2);
+                        break;
+
+                }
+                return false;
+            }
+        });
 
         new Background().execute();
 

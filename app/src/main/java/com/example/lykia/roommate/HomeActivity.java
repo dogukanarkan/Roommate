@@ -1,6 +1,13 @@
 package com.example.lykia.roommate;
 
 import android.content.Intent;
+
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.MenuItem;
+
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -8,6 +15,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -29,6 +37,12 @@ import java.util.List;
 
 public class HomeActivity extends AppCompatActivity {
 
+    private Spinner spinnerHayvan;
+    private Spinner spinnerCins;
+    private Spinner spinnerCinsiyet;
+    private ListView listViewAnimal;
+    private BottomNavigationView navButton;
+
     private Spinner animalSpinner;
     private Spinner raceSpinner;
     private Spinner genderSpinner;
@@ -40,12 +54,51 @@ public class HomeActivity extends AppCompatActivity {
     private MyHomeAdapter adapter;
     ArrayAdapter<CharSequence>adapterGender;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        navButton=(BottomNavigationView)findViewById(R.id.bottomBar);
+        navButton.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId())
+                {
+                    case R.id.home_nav:
+                        Intent intent=new Intent(HomeActivity.this,HomeActivity.class);
+                        startActivity(intent);
+                        finish();
+                        break;
+                    case R.id.search_nav:
+                        Intent intent1=new Intent(HomeActivity.this,SearchActivity.class);
+                        startActivity(intent1);
+                        finish();
+                        break;
+                    case R.id.profile_nav:
+                        Intent intent2=new Intent(HomeActivity.this,OwnProfileActivity.class);
+                        startActivity(intent2);
+                        finish();
+                        break;
+                }
+                return false;
+            }
+        });
+        spinnerHayvan=(Spinner)findViewById((R.id.
+                                            
+                                            ));
+        spinnerCins=(Spinner)findViewById((R.id.raceSpinner));
+        spinnerCinsiyet=(Spinner)findViewById((R.id.genderSpinner));
+        listViewAnimal=(ListView)findViewById(R.id.LVshowAnimal);
+
+        ArrayAdapter adapterHayvan = ArrayAdapter.createFromResource(this,R.array.cinsiyet, android.R.layout.simple_spinner_item);
+        adapterHayvan.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerHayvan.setAdapter(adapterHayvan);
+        spinnerHayvan.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(getBaseContext(), parent.getItemIdAtPosition(position)+"seçilen ", Toast.LENGTH_SHORT).show();
+
         animalSpinner= findViewById((R.id.animalSpinner));
         raceSpinner= findViewById((R.id.raceSpinner));
         genderSpinner= findViewById((R.id.genderSpinner));

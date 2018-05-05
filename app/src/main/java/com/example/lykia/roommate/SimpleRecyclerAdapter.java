@@ -28,7 +28,7 @@ public class SimpleRecyclerAdapter extends RecyclerView.Adapter<SimpleRecyclerAd
 
             card_view = (CardView) view.findViewById(R.id.card_view);
             animal_genus = (TextView) view.findViewById(R.id.animal_genus);
-            animal_img = (ImageView) view.findViewById(R.id.animal_photo);
+            animal_img = (ImageView) view.findViewById(R.id.photo);
 
         }
     }
