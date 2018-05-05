@@ -173,7 +173,7 @@ public class RegisterActivity extends AppCompatActivity {
         return UserDAO.insertUser(user);
     }
 
-    private void registerUserToFirebase(final String fullName, String mail, String password) {
+    private void registerUserToFirebase(final String fullName, final String mail, String password) {
         mAuth.createUserWithEmailAndPassword(mail, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
@@ -189,6 +189,13 @@ public class RegisterActivity extends AppCompatActivity {
                     userMap.put("thumbImage", "default");
 
                     mDatabase.setValue(userMap);
+
+                    mDatabase = FirebaseDatabase.getInstance().getReference().child("Mails").child(toMD5(mail));
+
+                    HashMap<String, String> mailMap = new HashMap<>();
+                    mailMap.put("userId", uid);
+
+                    mDatabase.setValue(mailMap);
                 } else {
                     String text = "Kayıt gerçekleşemedi.";
 
