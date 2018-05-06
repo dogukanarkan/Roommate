@@ -32,6 +32,7 @@ public class SearchActivity extends AppCompatActivity {
     private MyAdapter adapter;
     private List<UserDTO> list;
     private EditText SearchEditText;
+    private TextView emptySearch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +40,7 @@ public class SearchActivity extends AppCompatActivity {
         setContentView(R.layout.activity_search);
 
         SearchEditText = (EditText) findViewById(R.id.editText);
+        emptySearch = (TextView) findViewById(R.id.emptySearch);
         recyclerView = (RecyclerView) findViewById(R.id.searchRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         navButton = (BottomNavigationView) findViewById(R.id.bottomBar);
@@ -78,20 +80,26 @@ public class SearchActivity extends AppCompatActivity {
                 List<UserDTO> tempList = new ArrayList<>();
                 String fullName;
 
-                for(int k=0; k<list.size();k++)
-                {
+                for(int k=0; k<list.size();k++) {
                     fullName = list.get(k).getFirstName() + " " + list.get(k).getLastName();
 
                     if(fullName.toUpperCase().contains(charSequence.toString().toUpperCase())) {
                         tempList.add(list.get(k));
                     }
                 }
-                if(tempList!=null)
-                {
-                    adapter = new MyAdapter(tempList);
-                    recyclerView.setAdapter(adapter);
+
+                if (tempList.size() == list.size()) {
+                    tempList.clear();
                 }
 
+                if (tempList.size() > 0 || SearchEditText.length() == 0) {
+                    emptySearch.setVisibility(View.GONE);
+                } else {
+                    emptySearch.setVisibility(View.VISIBLE);
+                }
+
+                adapter = new MyAdapter(tempList);
+                recyclerView.setAdapter(adapter);
             }
 
             @Override
@@ -151,9 +159,6 @@ public class SearchActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Void voids) {
             super.onPostExecute(voids);
-
-            adapter = new MyAdapter(list);
-            recyclerView.setAdapter(adapter);
         }
     }
 }
