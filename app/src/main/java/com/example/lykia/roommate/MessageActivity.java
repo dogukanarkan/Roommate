@@ -92,56 +92,36 @@ public class MessageActivity extends AppCompatActivity {
 
         String messageUserMail = getIntent().getStringExtra("messageUserMail");
 
-        databaseReference.child("Mails").child(toMD5(messageUserMail)).addListenerForSingleValueEvent(new ValueEventListener() {
+        if (messageUserMail != null) {
+            databaseReference.child("Mails").child(toMD5(messageUserMail)).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    messageUserId = dataSnapshot.child("userId").getValue().toString();
+
+                    task();
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+        } else {
+            task();
+        }
+    }
+
+    private void task() {
+        loadMessage();
+
+        databaseReference.child("Users").child(messageUserId).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                messageUserId = dataSnapshot.child("userId").getValue().toString();
+                String chatImage = dataSnapshot.child("thumbImage").getValue().toString();
+                String chatUsername = dataSnapshot.child("name").getValue().toString();
 
-                loadMessage();
-
-                databaseReference.child("Users").child(messageUserId).addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        String chatImage = dataSnapshot.child("thumbImage").getValue().toString();
-                        String chatUsername = dataSnapshot.child("name").getValue().toString();
-
-                        name.setText(chatUsername);
-                        Picasso.get().load(chatImage).placeholder(R.drawable.person).into(image);
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                });
-
-                databaseReference.child("Chat").child(currentUserId).addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        if (!dataSnapshot.hasChild(messageUserId)) {
-                            Map chatAddMap = new HashMap();
-                            chatAddMap.put("timestamp", ServerValue.TIMESTAMP);
-
-                            Map chatUserMap = new HashMap();
-                            chatUserMap.put("Chat/" + currentUserId + "/" + messageUserId, chatAddMap);
-                            chatUserMap.put("Chat/" + messageUserId + "/" + currentUserId, chatAddMap);
-
-                            databaseReference.updateChildren(chatUserMap, new DatabaseReference.CompletionListener() {
-                                @Override
-                                public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
-                                    if (databaseError != null) {
-                                        Log.d("CHAT_LOG", databaseError.getMessage().toString());
-                                    }
-                                }
-                            });
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                });
+                name.setText(chatUsername);
+                Picasso.get().load(chatImage).placeholder(R.drawable.person).into(image);
             }
 
             @Override
@@ -150,10 +130,31 @@ public class MessageActivity extends AppCompatActivity {
             }
         });
 
-        sendButton.setOnClickListener(new View.OnClickListener() {
+        databaseReference.child("Chat").child(currentUserId).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onClick(View v) {
-                sendMessage();
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (!dataSnapshot.hasChild(messageUserId)) {
+                    Map chatAddMap = new HashMap();
+                    chatAddMap.put("timestamp", ServerValue.TIMESTAMP);
+
+                    Map chatUserMap = new HashMap();
+                    chatUserMap.put("Chat/" + currentUserId + "/" + messageUserId, chatAddMap);
+                    chatUserMap.put("Chat/" + messageUserId + "/" + currentUserId, chatAddMap);
+
+                    databaseReference.updateChildren(chatUserMap, new DatabaseReference.CompletionListener() {
+                        @Override
+                        public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                            if (databaseError != null) {
+                                Log.d("CHAT_LOG", databaseError.getMessage().toString());
+                            }
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
             }
         });
     }
