@@ -11,8 +11,14 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -21,7 +27,10 @@ public class AllMessageActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
     private RecyclerView usersList;
-    private DatabaseReference mDatabase;
+    private DatabaseReference userDatabase;
+    private DatabaseReference messageDatabase;
+    private DatabaseReference chatDatabase;
+    private String currentUserId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +43,10 @@ public class AllMessageActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("Mesajlar");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        mDatabase = FirebaseDatabase.getInstance().getReference().child("Users");
+        currentUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        userDatabase = FirebaseDatabase.getInstance().getReference().child("Users");
+        messageDatabase = FirebaseDatabase.getInstance().getReference().child("messages").child(currentUserId);
+        chatDatabase = FirebaseDatabase.getInstance().getReference().child("Chat").child(currentUserId);
 
         usersList = (RecyclerView) findViewById(R.id.allMessagesList);
         usersList.setHasFixedSize(true);
@@ -45,19 +57,63 @@ public class AllMessageActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        FirebaseRecyclerAdapter<FirebaseUsers, UsersViewHolder> adapter = new FirebaseRecyclerAdapter<FirebaseUsers, UsersViewHolder>(
-                FirebaseUsers.class, R.layout.users_single_layout, UsersViewHolder.class, mDatabase) {
-            @Override
-            protected void populateViewHolder(UsersViewHolder viewHolder, FirebaseUsers model, int position) {
-                viewHolder.setName(model.getName());
-                viewHolder.setImage(model.getThumbImage());
+        Query chatQuery = chatDatabase.orderByChild("timestamp");
 
+        FirebaseRecyclerAdapter<FirebaseUsers, UsersViewHolder> adapter = new FirebaseRecyclerAdapter<FirebaseUsers, UsersViewHolder>(
+                FirebaseUsers.class, R.layout.users_single_layout, UsersViewHolder.class, chatQuery) {
+            @Override
+            protected void populateViewHolder(final UsersViewHolder viewHolder, FirebaseUsers model, final int position) {
                 final String messageUserId = getRef(position).getKey();
+                Query lastMessageQuery = messageDatabase.child(messageUserId).limitToLast(1);
+
+                lastMessageQuery.addChildEventListener(new ChildEventListener() {
+                    @Override
+                    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                        String lastMessage = dataSnapshot.child("message").getValue().toString();
+                        viewHolder.setLastMessage(lastMessage);
+                    }
+
+                    @Override
+                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+                    }
+
+                    @Override
+                    public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+                    }
+
+                    @Override
+                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
 
                 viewHolder.view.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         startActivity(new Intent(AllMessageActivity.this, MessageActivity.class).putExtra("messageUserId", messageUserId));
+                    }
+                });
+
+                userDatabase.child(messageUserId).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        String name = dataSnapshot.child("name").getValue().toString();
+                        String image = dataSnapshot.child("thumbImage").getValue().toString();
+
+                        viewHolder.setName(name);
+                        viewHolder.setImage(image);
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
                     }
                 });
             }
@@ -95,8 +151,12 @@ public class AllMessageActivity extends AppCompatActivity {
 
         public void setImage(String thumbImage) {
             CircleImageView imageView = (CircleImageView) view.findViewById(R.id.userSingleImage);
-
             Picasso.get().load(thumbImage).placeholder(R.drawable.person).into(imageView);
+        }
+
+        public void setLastMessage(String lastMessage) {
+            TextView lastMessageView = (TextView) view.findViewById(R.id.userSingleVariable);
+            lastMessageView.setText(lastMessage);
         }
     }
 }

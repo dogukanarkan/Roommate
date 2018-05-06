@@ -109,6 +109,13 @@ public class MessageActivity extends AppCompatActivity {
         } else {
             task();
         }
+
+        sendButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sendMessage();
+            }
+        });
     }
 
     private void task() {
@@ -122,34 +129,6 @@ public class MessageActivity extends AppCompatActivity {
 
                 name.setText(chatUsername);
                 Picasso.get().load(chatImage).placeholder(R.drawable.person).into(image);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
-        databaseReference.child("Chat").child(currentUserId).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if (!dataSnapshot.hasChild(messageUserId)) {
-                    Map chatAddMap = new HashMap();
-                    chatAddMap.put("timestamp", ServerValue.TIMESTAMP);
-
-                    Map chatUserMap = new HashMap();
-                    chatUserMap.put("Chat/" + currentUserId + "/" + messageUserId, chatAddMap);
-                    chatUserMap.put("Chat/" + messageUserId + "/" + currentUserId, chatAddMap);
-
-                    databaseReference.updateChildren(chatUserMap, new DatabaseReference.CompletionListener() {
-                        @Override
-                        public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
-                            if (databaseError != null) {
-                                Log.d("CHAT_LOG", databaseError.getMessage().toString());
-                            }
-                        }
-                    });
-                }
             }
 
             @Override
@@ -212,6 +191,37 @@ public class MessageActivity extends AppCompatActivity {
             messageUserMap.put(messageUserRef + "/" + pushId, messageMap);
 
             sendText.setText("");
+
+            databaseReference.child("Chat").child(currentUserId).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    if (!dataSnapshot.hasChild(messageUserId)) {
+                        Map chatAddMap = new HashMap();
+                        chatAddMap.put("timestamp", ServerValue.TIMESTAMP);
+
+                        Map chatUserMap = new HashMap();
+                        chatUserMap.put("Chat/" + currentUserId + "/" + messageUserId, chatAddMap);
+                        chatUserMap.put("Chat/" + messageUserId + "/" + currentUserId, chatAddMap);
+
+                        databaseReference.updateChildren(chatUserMap, new DatabaseReference.CompletionListener() {
+                            @Override
+                            public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                                if (databaseError != null) {
+                                    Log.d("CHAT_LOG", databaseError.getMessage().toString());
+                                }
+                            }
+                        });
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+
+            databaseReference.child("Chat").child(currentUserId).child(messageUserId).child("timestamp").setValue(ServerValue.TIMESTAMP);
+            databaseReference.child("Chat").child(messageUserId).child(currentUserId).child("timestamp").setValue(ServerValue.TIMESTAMP);
 
             databaseReference.updateChildren(messageUserMap, new DatabaseReference.CompletionListener() {
                 @Override
