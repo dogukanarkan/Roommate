@@ -4,19 +4,10 @@
 
     <!-- "Mark Favorite", should appear as action button if possible -->
     <item
-        android:id="@+id/message_item"
-        android:icon="@drawable/message_icon"
+        android:id="@+id/message_nav"
+        android:icon="@drawable/message"
         android:title="Mesajlar"
         app:showAsAction="always"
         />
-
-    <item
-        android:id="@+id/article_item"
-        android:title="Yazılar"
-        app:showAsAction="never"
-        />
-    <item
-        android:id="@+id/rehoming_item"
-        android:title="Sahiplendir" />
 
 </menu>

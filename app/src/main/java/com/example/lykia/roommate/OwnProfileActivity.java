@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 
 public class OwnProfileActivity extends AppCompatActivity {
@@ -65,11 +66,20 @@ public class OwnProfileActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
     }
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-        if(mToggle.onOptionsItemSelected(item))
-        {
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.action_bar_menu, menu);
+
+        return true;
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (mToggle.onOptionsItemSelected(item)) {
             return true;
+        } else if (item.getItemId() == R.id.message_nav) {
+            startActivity(new Intent(OwnProfileActivity.this, AllMessageActivity.class));
         }
         return super.onOptionsItemSelected(item);
 
