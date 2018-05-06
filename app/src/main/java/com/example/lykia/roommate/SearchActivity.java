@@ -3,7 +3,6 @@ package com.example.lykia.roommate;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
-import android.support.design.internal.BottomNavigationItemView;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,7 +11,6 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,7 +32,6 @@ public class SearchActivity extends AppCompatActivity {
     private MyAdapter adapter;
     private List<UserDTO> list;
     private EditText SearchEditText;
-    private boolean check = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +42,7 @@ public class SearchActivity extends AppCompatActivity {
         recyclerView = (RecyclerView) findViewById(R.id.searchRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         navButton = (BottomNavigationView) findViewById(R.id.bottomBar);
+
         navButton.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -125,7 +123,8 @@ public class SearchActivity extends AppCompatActivity {
             final String userId = Integer.toString(users.get(position).getUserId());
 
             holder.name.setText(fullName);
-            Picasso.get().load(users.get(position).getImagePath()).into(holder.image);
+            Picasso.get().load(users.get(position).getImagePath()).placeholder(R.drawable.person).into(holder.image);
+            holder.location.setText(users.get(position).getLocation());
 
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -155,8 +154,6 @@ public class SearchActivity extends AppCompatActivity {
 
             adapter = new MyAdapter(list);
             recyclerView.setAdapter(adapter);
-
-            check = false;
         }
     }
 }
@@ -165,11 +162,13 @@ class MyHolder extends RecyclerView.ViewHolder {
 
     CircleImageView image;
     TextView name;
+    TextView location;
 
     public MyHolder(View itemView) {
         super(itemView);
 
         image = (CircleImageView) itemView.findViewById(R.id.userSingleImage);
         name = (TextView) itemView.findViewById(R.id.userSingleName);
+        location = (TextView) itemView.findViewById(R.id.userSingleVariable);
     }
 }
