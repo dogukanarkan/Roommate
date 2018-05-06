@@ -16,7 +16,7 @@ public class UserDAO {
     private static final String getUserByIdQuery = "SELECT * FROM User WHERE user_id = ?";
     private static final String getUserByMailQuery = "SELECT * FROM User WHERE mail = ?";
     private static final String getUserForLoginQuery = "SELECT * FROM User WHERE mail = ? AND password = ?";
-    private static final String getAllUsersQuery = "SELECT * FROM User";
+    private static final String getAllUsersQuery = "SELECT * FROM User ORDER BY first_name ASC, last_name ASC";
     private static final String insertUserQuery = "INSERT INTO User(mail, image_path, first_name, last_name, location, password, register_date) VALUES(?, ?, ?, ?, ?, ?, NOW())";
     private static final String updateUserQuery = "UPDATE User SET mail = ?, image_path = ?, first_name = ?, last_name = ?, location = ?, password = ?, register_date = ? WHERE user_id = ?";
     private static final String deleteUserQuery = "DELETE FROM User WHERE user_id = ?";
