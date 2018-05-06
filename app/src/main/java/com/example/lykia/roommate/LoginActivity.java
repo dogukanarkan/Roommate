@@ -122,7 +122,7 @@ public class LoginActivity extends AppCompatActivity {
 
                 loginUserToFirebase(mail, password);
 
-                startActivity(new Intent(LoginActivity.this, HomeActivity.class).putExtra("userId", id));
+                startActivity(new Intent(LoginActivity.this, AllMessageActivity.class).putExtra("userId", id));
                 finish();
             } else if (result.equals("admin")) {
                 loginProgress.dismiss();
