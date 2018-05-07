@@ -3,6 +3,8 @@ package com.example.lykia.roommate;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -15,13 +17,12 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
-public class OwnProfileActivity extends AppCompatActivity {
+public class OwnProfileActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private BottomNavigationView navButton;
-
-
     private Toolbar toolbar;
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mToggle;
+    private int userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +56,9 @@ public class OwnProfileActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("");
 
+        userId = 1;
+        setNavigationViewListener();
+
 
         mDrawerLayout=(DrawerLayout)findViewById(R.id.drawerLayout);
         mToggle=new ActionBarDrawerToggle(this,mDrawerLayout,R.string.open,R.string.close);
@@ -66,6 +70,12 @@ public class OwnProfileActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
     }
+
+    private void setNavigationViewListener() {
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -84,5 +94,40 @@ public class OwnProfileActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
 
     }
+    public boolean onMenuItemSelected(MenuItem item) {
+        // Handle navigation view item clicks here.
+        switch (item.getItemId()) {
+
+            case R.id.rehoming_nav: {
+                Intent intent=new Intent(OwnProfileActivity.this,RehomingActivity.class);
+                startActivity(intent);
+                break;
+            }
+        }
+        //close navigation drawer
+        mDrawerLayout.closeDrawer(GravityCompat.START);
+        return true;
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.rehoming_nav:
+                startActivity(new Intent(OwnProfileActivity.this, RehomingActivity.class).putExtra("userId", userId));
+                break;
+            case R.id.article_nav:
+                startActivity(new Intent(OwnProfileActivity.this,BriefArticleActivity.class));
+                break;
+            case R.id.edit_profile_nav:
+                startActivity(new Intent(OwnProfileActivity.this, EditProfileActivity.class).putExtra("userId", userId));
+                break;
+            case R.id.logout_nav:
+                startActivity(new Intent(OwnProfileActivity.this, MainActivity.class));
+                break;
+
+        }
+        return false;
+    }
+
 
 }
