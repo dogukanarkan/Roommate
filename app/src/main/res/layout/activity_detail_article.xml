@@ -61,7 +61,7 @@
                 android:id="@+id/dateText"
                 android:layout_width="150dp"
                 android:layout_height="30dp"
-                android:layout_marginStart="240dp"
+                android:layout_marginStart="275dp"
                 android:layout_marginTop="15dp" />
 
         </LinearLayout>
