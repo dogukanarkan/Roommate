@@ -96,6 +96,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
             public void onClick(View view) {
                 for (int k = 0; k < viewHolder.messageText.getText().length(); k++) {
                     if (viewHolder.messageText.getText().charAt(k) == '#') {
+                        code = "";
                         for (int i = k + 1; i < k + 9; i++) {
                             code += viewHolder.messageText.getText().charAt(i);
                         }
