@@ -17,6 +17,8 @@ public class RaceDAO {
     private static final String getRacesByAnimalIdQuery = "SELECT * FROM Race JOIN Animal ON Race.animal_id = Animal.animal_id WHERE Race.animal_id = ?";
     private static final String getRacesByAnimalNameQuery = "SELECT * FROM Race JOIN Animal ON Race.animal_id = Animal.animal_id WHERE Race.animal_id IN (SELECT animal_id FROM Animal WHERE animal_name = ?)";
     private static final String getAllRacesQuery = "SELECT * FROM Race JOIN Animal ON Race.animal_id = Animal.animal_id";
+    private static final String getRaceCountByAnimalIdQuery = "SELECT * FROM Race WHERE Race.animal_id = ? ORDER BY race_id DESC LIMIT 1";
+
 
     public static RaceDTO getRaceById(int id) {
 
@@ -132,6 +134,32 @@ public class RaceDAO {
         }
 
         return null;
+    }
+
+    public static int getRaceCount(int id) {
+
+        Connection connection = null;
+        PreparedStatement statement = null;
+
+        try {
+            connection = DatabaseOperations.openConnection();
+            statement = connection.prepareStatement(getRaceCountByAnimalIdQuery);
+
+            statement.setInt(1, id);
+
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                return resultSet.getInt("race_id");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DatabaseOperations.closeStatement(statement);
+            DatabaseOperations.closeConnection(connection);
+        }
+
+        return 0;
     }
 
     public static RaceDTO extractRaceFromResultSet(ResultSet resultSet) throws SQLException {
