@@ -3,13 +3,8 @@ package com.example.lykia.roommate;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -17,10 +12,9 @@ import com.example.lykia.roommate.DAOs.ArticleDAO;
 import com.example.lykia.roommate.DTOs.ArticleDTO;
 import com.squareup.picasso.Picasso;
 
-import java.util.List;
+import java.sql.Timestamp;
 
 public class DetailArticleActivity extends AppCompatActivity {
-
 
     private ArticleDTO article;
     private Toolbar toolbar;
@@ -42,14 +36,12 @@ public class DetailArticleActivity extends AppCompatActivity {
 
         articleId = getIntent().getExtras().getInt("articleId");
 
-
         image = (ImageView)findViewById(R.id.photo);
         name = (TextView)findViewById(R.id.title);
         detailArticle=(TextView)findViewById(R.id.detailText);
         dateText=(TextView)findViewById(R.id.dateText);
 
         new Background().execute();
-
     }
 
     @Override
@@ -64,6 +56,7 @@ public class DetailArticleActivity extends AppCompatActivity {
 
         return true;
     }
+
     public class Background extends AsyncTask<Void, Void, Void> {
         @Override
         protected Void doInBackground(Void... voids) {
@@ -79,7 +72,13 @@ public class DetailArticleActivity extends AppCompatActivity {
             Picasso.get().load(article.getImagePath()).into(image);
             name.setText(article.getHeader());
             detailArticle.setText(article.getText());
-            dateText.setText(article.getAdditionDate().toString());
+            dateText.setText(DateTimeConverter(article.getAdditionDate()));
         }
+    }
+
+    private String DateTimeConverter (Timestamp timestamp) {
+        java.text.SimpleDateFormat sample = new java.text.SimpleDateFormat("dd/MM/yyyy HH:mm");
+
+        return sample.format(timestamp);
     }
 }
