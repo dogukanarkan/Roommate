@@ -15,6 +15,8 @@ public class RehomingDAO {
 
     private static final String getRehomingPetByIdQuery = "SELECT * FROM Rehoming JOIN User ON Rehoming.owner_id = User.user_id JOIN Race ON Rehoming.race_id = Race.race_id JOIN Animal ON Race.animal_id = Animal.animal_id WHERE pet_id = ?";
     private static final String getRehomingPetsByOwnerIdQuery = "SELECT * FROM Rehoming JOIN User ON Rehoming.owner_id = User.user_id JOIN Race ON Rehoming.race_id = Race.race_id JOIN Animal ON Race.animal_id = Animal.animal_id WHERE owner_id = ?";
+    private static final String getRehomingPetsByAnimalIdQuery = "SELECT * FROM Rehoming JOIN User ON Rehoming.owner_id = User.user_id JOIN Race ON Rehoming.race_id = Race.race_id JOIN Animal ON Race.animal_id = Animal.animal_id WHERE Animal.animal_id = ?";
+    private static final String getRehomingPetsByRaceIdQuery = "SELECT * FROM Rehoming JOIN User ON Rehoming.owner_id = User.user_id JOIN Race ON Rehoming.race_id = Race.race_id JOIN Animal ON Race.animal_id = Animal.animal_id WHERE Race.race_id = ?";
     private static final String getRehomingPetByCodeQuery = "SELECT * FROM Rehoming JOIN User ON Rehoming.owner_id = User.user_id JOIN Race ON Rehoming.race_id = Race.race_id JOIN Animal ON Race.animal_id = Animal.animal_id WHERE code = ?";
     private static final String getAllRehomingPetsQuery = "SELECT * FROM Rehoming JOIN User ON Rehoming.owner_id = User.user_id JOIN Race ON Rehoming.race_id = Race.race_id JOIN Animal ON Race.animal_id = Animal.animal_id";
     private static final String getRehomingCountQuery = "SELECT * FROM Rehoming ORDER BY pet_id DESC LIMIT 1";
@@ -52,12 +54,77 @@ public class RehomingDAO {
     public static List<RehomingDTO> getRehomingPetsByOwnerId(int id) {
 
         Connection connection = null;
-        Statement statement = null;
+        PreparedStatement statement = null;
 
         try {
             connection = DatabaseOperations.openConnection();
-            statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(getRehomingPetsByOwnerIdQuery);
+            statement = connection.prepareStatement(getRehomingPetsByOwnerIdQuery);
+
+            statement.setInt(1, id);
+
+            ResultSet resultSet = statement.executeQuery();
+
+            List<RehomingDTO> pets = new ArrayList<>();
+
+            while (resultSet.next()) {
+                RehomingDTO pet = extractRehomingPetFromResultSet(resultSet);
+                pets.add(pet);
+            }
+
+            return pets;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DatabaseOperations.closeStatement(statement);
+            DatabaseOperations.closeConnection(connection);
+        }
+
+        return null;
+    }
+
+    public static List<RehomingDTO> getRehomingPetsByAnimalId(int id) {
+
+        Connection connection = null;
+        PreparedStatement statement = null;
+
+        try {
+            connection = DatabaseOperations.openConnection();
+            statement = connection.prepareStatement(getRehomingPetsByAnimalIdQuery);
+
+            statement.setInt(1, id);
+
+            ResultSet resultSet = statement.executeQuery();
+
+            List<RehomingDTO> pets = new ArrayList<>();
+
+            while (resultSet.next()) {
+                RehomingDTO pet = extractRehomingPetFromResultSet(resultSet);
+                pets.add(pet);
+            }
+
+            return pets;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DatabaseOperations.closeStatement(statement);
+            DatabaseOperations.closeConnection(connection);
+        }
+
+        return null;
+    }
+
+    public static List<RehomingDTO> getRehomingPetsByRaceId(int id) {
+
+        Connection connection = null;
+        PreparedStatement statement = null;
+
+        try {
+            connection = DatabaseOperations.openConnection();
+            statement = connection.prepareStatement(getRehomingPetsByRaceIdQuery);
+
+            statement.setInt(1, id);
+
+            ResultSet resultSet = statement.executeQuery();
 
             List<RehomingDTO> pets = new ArrayList<>();
 
