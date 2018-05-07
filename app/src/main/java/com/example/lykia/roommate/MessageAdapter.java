@@ -1,11 +1,20 @@
 package com.example.lykia.roommate;
 
+import android.app.Dialog;
+import android.content.Context;
+import android.os.AsyncTask;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.lykia.roommate.DAOs.RehomingDAO;
+import com.example.lykia.roommate.DTOs.AnimalDTO;
+import com.example.lykia.roommate.DTOs.RaceDTO;
+import com.example.lykia.roommate.DTOs.RehomingDTO;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -22,6 +31,8 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 
     private List<Messages> messageList;
     private FirebaseAuth auth;
+    private RehomingDTO rehoming;
+    private String code = "";
 
     public MessageAdapter(List<Messages> messageList) {
         this.messageList = messageList;
@@ -43,6 +54,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
         public TextView displayName;
         public TextView messageText;
 
+
         public MessageViewHolder(View view) {
             super(view);
 
@@ -53,7 +65,8 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
     }
 
     @Override
-    public void onBindViewHolder(final MessageViewHolder viewHolder, int i) {
+    public void onBindViewHolder(final MessageViewHolder viewHolder, final int i) {
+
         auth = FirebaseAuth.getInstance();
         String currentUserId = auth.getCurrentUser().getUid();
         Messages message = messageList.get(i);
@@ -78,7 +91,62 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
         });
 
         viewHolder.messageText.setText(message.getMessage());
+        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                for (int k = 0; k < viewHolder.messageText.getText().length(); k++) {
+                    if (viewHolder.messageText.getText().charAt(k) == '#') {
+                        for (int i = k + 1; i < k + 9; i++) {
+                            code += viewHolder.messageText.getText().charAt(i);
+                        }
+
+                        new Background().execute(view.getContext());
+                    }
+                }
+            }
+        });
     }
+
+    public class Background extends AsyncTask<Context, Void, Context> {
+        @Override
+        protected Context doInBackground(Context... contexts) {
+            rehoming = RehomingDAO.getRehomingPetByCode(code);
+
+            return contexts[0];
+        }
+
+        @Override
+        protected void onPostExecute(Context context) {
+            super.onPostExecute(context);
+
+            final Dialog dialog = new Dialog(context);
+            dialog.setContentView(R.layout.custom);
+            dialog.setTitle(code);
+
+            TextView animalText = (TextView) dialog.findViewById(R.id.animalName);
+            animalText.setText(rehoming.getRace().getAnimal().getAnimalName());
+            TextView raceText = (TextView) dialog.findViewById(R.id.raceText);
+            raceText.setText(rehoming.getRace().getRaceName());
+            TextView monthText = (TextView) dialog.findViewById(R.id.month);
+            monthText.setText(Integer.toString(rehoming.getMonthOld()));
+            TextView genderText = (TextView) dialog.findViewById(R.id.gender);
+            genderText.setText(rehoming.getGender());
+            TextView information=(TextView)dialog.findViewById(R.id.additional);
+            information.setText(rehoming.getInformation());
+            CircleImageView image1 = (CircleImageView) dialog.findViewById(R.id.image);
+            Picasso.get().load(rehoming.getImagePath()).into(image1);
+            Button angryButton = (Button)dialog.findViewById(R.id.angry_btn);
+            angryButton.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    dialog.dismiss();
+
+                }
+            });
+
+            dialog.show();
+        }
+    }
+
 
     @Override
     public int getItemCount() {

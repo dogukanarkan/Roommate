@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/image"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="15dp" />
+
+    <TextView
+        android:id="@+id/animalName"
+        android:layout_width="200dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="150dp"
+        android:layout_marginTop="20dp" />
+
+    <TextView
+        android:id="@+id/raceText"
+        android:layout_width="200dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="150dp"
+        android:layout_marginTop="40dp" />
+
+    <TextView
+        android:id="@+id/gender"
+        android:layout_width="200dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="150dp"
+        android:layout_marginTop="60dp" />
+
+    <TextView
+        android:id="@+id/month"
+        android:layout_width="200dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="150dp"
+        android:layout_marginTop="80dp"
+       />
+
+    <TextView
+        android:id="@+id/additional"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/month"
+        android:layout_below="@+id/month" />
+
+    <Button
+        android:id="@+id/angry_btn"
+        android:layout_width="130dp"
+        android:layout_height="35dp"
+        android:layout_alignStart="@+id/additional"
+        android:layout_below="@+id/additional"
+        android:layout_marginStart="32dp"
+        android:background="@drawable/buttonshapes"
+        android:shadowColor="#A8A8A8"
+        android:shadowDx="0"
+        android:shadowDy="-1"
+        android:shadowRadius="0"
+        android:text="Tamam"
+        android:textColor="#FFFFFF"
+        android:textSize="15sp" />
+
+</RelativeLayout>
