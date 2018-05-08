@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -69,7 +70,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 
         auth = FirebaseAuth.getInstance();
         String currentUserId = auth.getCurrentUser().getUid();
-        Messages message = messageList.get(i);
+        final Messages message = messageList.get(i);
         String fromUser = message.getFrom();
 
         DatabaseReference dr = FirebaseDatabase.getInstance().getReference().child("Users").child(fromUser);
@@ -90,15 +91,36 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
             }
         });
 
-        viewHolder.messageText.setText(message.getMessage());
+        String first = "", colorful = "", last = "";
+        boolean check = true;
+
+        for (int k = 0; k < message.getMessage().length(); k++) {
+            if (message.getMessage().charAt(k) == '#') {
+                code = "";
+                for (int a = k; a < k + 9; a++) {
+                    code += message.getMessage().charAt(a);
+                }
+
+                k += 8;
+
+                check = false;
+                colorful = "<font color='#0000FF'>" + code + "</font>";
+            } else if (check) {
+                first += message.getMessage().charAt(k);
+            } else {
+                last += message.getMessage().charAt(k);
+            }
+        }
+
+        viewHolder.messageText.setText(Html.fromHtml(first + colorful + last));
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                for (int k = 0; k < viewHolder.messageText.getText().length(); k++) {
-                    if (viewHolder.messageText.getText().charAt(k) == '#') {
+                for (int k = 0; k < message.getMessage().length(); k++) {
+                    if (message.getMessage().charAt(k) == '#') {
                         code = "";
                         for (int i = k + 1; i < k + 9; i++) {
-                            code += viewHolder.messageText.getText().charAt(i);
+                            code += message.getMessage().charAt(i);
                         }
 
                         new Background().execute(view.getContext());
