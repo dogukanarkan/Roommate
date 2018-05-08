@@ -13,9 +13,9 @@ import java.util.List;
 
 public class AdoptedDAO {
 
-    private static final String getAdoptedPetQuery = "SELECT * FROM Adopted JOIN User ON Adopted.from_user_id = User.user_id AND Adopted.to_user_id = User.user_id WHERE adopted_id = ?";
-    private static final String getAllAdoptedPetsQuery = "SELECT * FROM Adopted JOIN User ON Adopted.from_user_id = User.user_id AND Adopted.to_user_id = User.user_id";
-    private static final String insertAdoptedPetQuery = "INSERT INTO Adopted(from_user_id, to_user_id, code, adopted_date) VALUES(?, ?, ?, NOW())";
+    private static final String getAdoptedPetQuery = "SELECT * FROM Adopted JOIN User AS FromUser ON Adopted.from_user_id = FromUser.user_id JOIN User AS ToUser ON Adopted.to_user_id = ToUser.to_user_id JOIN Race ON Adopted.race_id = Race.race_id WHERE adopted_id = ?";
+    private static final String getAllAdoptedPetsQuery = "SELECT * FROM Adopted JOIN User AS FromUser ON Adopted.from_user_id = FromUser.user_id JOIN User AS ToUser ON Adopted.to_user_id = ToUser.to_user_id JOIN Race ON Adopted.race_id = Race.race_id";
+    private static final String insertAdoptedPetQuery = "INSERT INTO Adopted(from_user_id, to_user_id, race_id, image_path, gender, month_old, adopted_date) VALUES(?, ?, ?, ?, ?, ?, NOW())";
     private static final String deleteAdoptedPetQuery = "DELETE FROM Adopted WHERE adopted_id = ?";
 
     public static AdoptedDTO getAdoptedPet(int id) {
@@ -107,7 +107,10 @@ public class AdoptedDAO {
 
             statement.setInt(1, pet.getFromUser().getUserId());
             statement.setInt(2, pet.getToUser().getUserId());
-            statement.setString(3, pet.getCode());
+            statement.setInt(3, pet.getRace().getRaceId());
+            statement.setString(4, pet.getImagePath());
+            statement.setString(5, pet.getGender());
+            statement.setInt(6, pet.getMonthOld());
 
             result = statement.executeUpdate();
         } catch (SQLException e) {
@@ -124,10 +127,13 @@ public class AdoptedDAO {
 
         AdoptedDTO pet = new AdoptedDTO();
 
-        pet.setAdoptedId(resultSet.getInt("pet_id"));
+        pet.setAdoptedId(resultSet.getInt("adopted_id"));
         pet.setFromUser(UserDAO.extractUserFromResultSet(resultSet));
         pet.setToUser(UserDAO.extractUserFromResultSet(resultSet));
-        pet.setCode(resultSet.getString("code"));
+        pet.setRace(RaceDAO.extractRaceFromResultSet(resultSet));
+        pet.setImagePath(resultSet.getString("image_path"));
+        pet.setGender(resultSet.getString("gender"));
+        pet.setMonthOld(resultSet.getInt("month_old"));
         pet.setAdoptedDate(resultSet.getTimestamp("adopted_date"));
 
         return pet;

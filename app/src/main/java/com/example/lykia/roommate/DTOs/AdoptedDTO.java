@@ -7,17 +7,23 @@ public class AdoptedDTO {
     private int adoptedId;
     private UserDTO fromUser;
     private UserDTO toUser;
-    private String code;
+    private RaceDTO race;
+    private String imagePath;
+    private String gender;
+    private int monthOld;
     private Timestamp adoptedDate;
 
     public AdoptedDTO() {
     }
 
-    public AdoptedDTO(int adoptedId, UserDTO fromUser, UserDTO toUser, String code, Timestamp adoptedDate) {
+    public AdoptedDTO(int adoptedId, UserDTO fromUser, UserDTO toUser, RaceDTO race, String imagePath, String gender, int monthOld, Timestamp adoptedDate) {
         this.adoptedId = adoptedId;
         this.fromUser = fromUser;
         this.toUser = toUser;
-        this.code = code;
+        this.race = race;
+        this.imagePath = imagePath;
+        this.gender = gender;
+        this.monthOld = monthOld;
         this.adoptedDate = adoptedDate;
     }
 
@@ -45,12 +51,36 @@ public class AdoptedDTO {
         this.toUser = toUser;
     }
 
-    public String getCode() {
-        return code;
+    public RaceDTO getRace() {
+        return race;
     }
 
-    public void setCode(String code) {
-        this.code = code;
+    public void setRace(RaceDTO race) {
+        this.race = race;
+    }
+
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public int getMonthOld() {
+        return monthOld;
+    }
+
+    public void setMonthOld(int monthOld) {
+        this.monthOld = monthOld;
     }
 
     public Timestamp getAdoptedDate() {
