@@ -60,6 +60,10 @@ public class OwnProfileActivity extends AppCompatActivity implements NavigationV
     private int petId;
     private String text;
     private Button deleteBtn;
+    private CircleImageView userImage;
+    private TextView userName;
+    private TextView userLocation;
+    private UserDTO user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,10 +98,11 @@ public class OwnProfileActivity extends AppCompatActivity implements NavigationV
 
         userId = getIntent().getExtras().getInt("userId");
 
+
         recyclerView = findViewById(R.id.recycler_view_OwnProfile);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-
+        new UserBackground().execute();
         new OwnProfileActivity.Background().execute();
 
         setNavigationViewListener();
@@ -110,6 +115,11 @@ public class OwnProfileActivity extends AppCompatActivity implements NavigationV
         mToggle.syncState();
 
         deleteBtn=(Button)findViewById(R.id.deleteBtn);
+        userImage=(CircleImageView)findViewById(R.id.profile_image);
+        userName=(TextView)findViewById(R.id.textViewName);
+        userLocation=(TextView)findViewById(R.id.textViewLocation);
+
+
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -139,21 +149,6 @@ public class OwnProfileActivity extends AppCompatActivity implements NavigationV
 
     }
 
-    public boolean onMenuItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
-        switch (item.getItemId()) {
-
-            case R.id.rehoming_nav: {
-                Intent intent = new Intent(OwnProfileActivity.this, RehomingActivity.class);
-                startActivity(intent);
-                break;
-            }
-        }
-        //close navigation drawer
-        mDrawerLayout.closeDrawer(GravityCompat.START);
-        return true;
-    }
-
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
@@ -161,13 +156,13 @@ public class OwnProfileActivity extends AppCompatActivity implements NavigationV
                 startActivity(new Intent(OwnProfileActivity.this, RehomingActivity.class).putExtra("userId", userId));
                 break;
             case R.id.article_nav:
-                startActivity(new Intent(OwnProfileActivity.this, BriefArticleActivity.class));
+                startActivity(new Intent(OwnProfileActivity.this,BriefArticleActivity.class));
                 break;
             case R.id.edit_profile_nav:
                 startActivity(new Intent(OwnProfileActivity.this, EditProfileActivity.class).putExtra("userId", userId));
                 break;
             case R.id.logout_nav:
-                startActivity(new Intent(OwnProfileActivity.this, LoginActivity.class));
+                startActivity(new Intent(OwnProfileActivity.this, MainActivity.class));
                 break;
 
         }
@@ -259,10 +254,29 @@ public class OwnProfileActivity extends AppCompatActivity implements NavigationV
         toast.show();
     }
 
+    public class UserBackground extends AsyncTask<Void,Void,Void>{
+        @Override
+        protected Void doInBackground(Void... voids) {
+            user=UserDAO.getUserById(userId);
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void voids) {
+            super.onPostExecute(voids);
+
+            userName.setText(user.getFirstName() + " " + user.getLastName());
+            userLocation.setText(user.getLocation());
+            Picasso.get().load(user.getImagePath()).placeholder(R.drawable.person).into(userImage);
+
+        }
+    }
+
     public class Background extends AsyncTask<Void, Void, Void> {
         @Override
         protected Void doInBackground(Void... voids) {
-            pets = RehomingDAO.getAllRehomingPets();
+            pets = RehomingDAO.getRehomingPetsByOwnerId(userId);
 
             return null;
         }

@@ -31,7 +31,7 @@ public class UserProfileActivity extends AppCompatActivity {
     private List<RehomingDTO> pets;
     private UserDTO user;
     private Toolbar toolbar;
-    private String userId;
+    private int userId;
     private CircleImageView userImage;
     private TextView userName;
     private TextView userLocation;
@@ -47,7 +47,7 @@ public class UserProfileActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        userId = getIntent().getStringExtra("userId");
+        userId = getIntent().getExtras().getInt("userId");
 
         userImage = (CircleImageView) findViewById(R.id.userImage);
         userName = (TextView) findViewById(R.id.userName);
@@ -137,8 +137,8 @@ public class UserProfileActivity extends AppCompatActivity {
     public class Background extends AsyncTask<Void, Void, Void> {
         @Override
         protected Void doInBackground(Void... voids) {
-            user = UserDAO.getUserById(Integer.parseInt(userId));
-            pets = RehomingDAO.getRehomingPetsByOwnerId(Integer.parseInt(userId));
+            user = UserDAO.getUserById(userId);
+            pets = RehomingDAO.getRehomingPetsByOwnerId(userId);
 
             return null;
         }
