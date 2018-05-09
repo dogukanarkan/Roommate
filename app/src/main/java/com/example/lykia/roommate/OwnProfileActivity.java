@@ -29,9 +29,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.lykia.roommate.DAOs.AdoptedDAO;
+import com.example.lykia.roommate.DAOs.RaceDAO;
 import com.example.lykia.roommate.DAOs.RehomingDAO;
 import com.example.lykia.roommate.DAOs.UserDAO;
 import com.example.lykia.roommate.DTOs.AdoptedDTO;
+import com.example.lykia.roommate.DTOs.RaceDTO;
 import com.example.lykia.roommate.DTOs.RehomingDTO;
 import com.example.lykia.roommate.DTOs.UserDTO;
 import com.squareup.picasso.Picasso;
@@ -51,34 +53,34 @@ public class OwnProfileActivity extends AppCompatActivity implements NavigationV
     private RecyclerView recyclerView;
     private OwnProfileActivity.MyOwnAdapter adapter;
     private List<RehomingDTO> pets;
-    private String userId;
+    private int userId;
     private EditText toUser;
     private Button dialogBtn;
     private String toUserMail;
-    private String code;
+    private int petId;
     private String text;
+    private Button deleteBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_own_profile);
 
-        navButton=(BottomNavigationView)findViewById(R.id.bottomBar);
+        navButton = (BottomNavigationView) findViewById(R.id.bottomBar);
         navButton.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId())
-                {
+                switch (item.getItemId()) {
                     case R.id.home_nav:
-                        Intent intent=new Intent(OwnProfileActivity.this,HomeActivity.class);
+                        Intent intent = new Intent(OwnProfileActivity.this, HomeActivity.class);
                         startActivity(intent);
                         return true;
                     case R.id.search_nav:
-                        Intent intent1=new Intent(OwnProfileActivity.this,SearchActivity.class);
+                        Intent intent1 = new Intent(OwnProfileActivity.this, SearchActivity.class);
                         startActivity(intent1);
                         return true;
                     case R.id.profile_nav:
-                        Intent intent2=new Intent(OwnProfileActivity.this,OwnProfileActivity.class);
+                        Intent intent2 = new Intent(OwnProfileActivity.this, OwnProfileActivity.class);
                         startActivity(intent2);
                         return true;
                 }
@@ -90,9 +92,9 @@ public class OwnProfileActivity extends AppCompatActivity implements NavigationV
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("");
 
-        userId = getIntent().getStringExtra("userId");
+        userId = getIntent().getExtras().getInt("userId");
 
-        recyclerView =findViewById(R.id.recycler_view_OwnProfile);
+        recyclerView = findViewById(R.id.recycler_view_OwnProfile);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
 
@@ -101,12 +103,13 @@ public class OwnProfileActivity extends AppCompatActivity implements NavigationV
         setNavigationViewListener();
 
 
-        mDrawerLayout=(DrawerLayout)findViewById(R.id.drawerLayout);
-        mToggle=new ActionBarDrawerToggle(this,mDrawerLayout,R.string.open,R.string.close);
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
+        mToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.open, R.string.close);
 
         mDrawerLayout.addDrawerListener(mToggle);
         mToggle.syncState();
 
+        deleteBtn=(Button)findViewById(R.id.deleteBtn);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -135,12 +138,13 @@ public class OwnProfileActivity extends AppCompatActivity implements NavigationV
         return super.onOptionsItemSelected(item);
 
     }
+
     public boolean onMenuItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         switch (item.getItemId()) {
 
             case R.id.rehoming_nav: {
-                Intent intent=new Intent(OwnProfileActivity.this,RehomingActivity.class);
+                Intent intent = new Intent(OwnProfileActivity.this, RehomingActivity.class);
                 startActivity(intent);
                 break;
             }
@@ -157,7 +161,7 @@ public class OwnProfileActivity extends AppCompatActivity implements NavigationV
                 startActivity(new Intent(OwnProfileActivity.this, RehomingActivity.class).putExtra("userId", userId));
                 break;
             case R.id.article_nav:
-                startActivity(new Intent(OwnProfileActivity.this,BriefArticleActivity.class));
+                startActivity(new Intent(OwnProfileActivity.this, BriefArticleActivity.class));
                 break;
             case R.id.edit_profile_nav:
                 startActivity(new Intent(OwnProfileActivity.this, EditProfileActivity.class).putExtra("userId", userId));
@@ -169,6 +173,7 @@ public class OwnProfileActivity extends AppCompatActivity implements NavigationV
         }
         return false;
     }
+
     public class MyOwnAdapter extends RecyclerView.Adapter<MyOwnHolder> {
 
         List<RehomingDTO> pets;
@@ -184,12 +189,15 @@ public class OwnProfileActivity extends AppCompatActivity implements NavigationV
 
             return holder;
         }
+
         @Override
         public void onBindViewHolder(MyOwnHolder holder, final int position) {
             holder.textViewRace.setText(pets.get(position).getRace().getRaceName());
             holder.textViewMonth.setText(Integer.toString(pets.get(position).getMonthOld()));
             holder.textViewGender.setText(pets.get(position).getGender());
             Picasso.get().load(pets.get(position).getImagePath()).placeholder(R.drawable.default_rehoming_icon).into(holder.image);
+
+            petId = pets.get(position).getPetId();
 
             holder.rehomedBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -198,27 +206,39 @@ public class OwnProfileActivity extends AppCompatActivity implements NavigationV
                     dialog.setContentView(R.layout.adopted_layout);
                     dialog.setTitle("Sahiplendir");
 
-                    toUser=(EditText) dialog.findViewById(R.id.toUser);
-                    dialogBtn=(Button) dialog.findViewById(R.id.dialogBtn);
+                    toUser = (EditText) dialog.findViewById(R.id.toUser);
+                    dialogBtn = (Button) dialog.findViewById(R.id.dialogBtn);
 
                     dialog.show();
 
                     dialogBtn.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            code = pets.get(position).getCode();
                             toUserMail = toUser.getText().toString();
 
                             new AdoptedPet().execute();
+
+                            dialog.dismiss();
+                            text = "Hayvanınız Sahiplendirildi";
+                            showToast(text);
                         }
                     });
 
-                    dialog.dismiss();
-                    text = "Hayvanınız Sahiplendirildi";
 
+                }
+
+            });
+
+            holder.deleteBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    new AdoptedPetDelete().execute();
+                    text = "Hayvanınız Sistemden Kaldırıldı";
                     showToast(text);
+
                 }
             });
+
         }
 
         @Override
@@ -226,6 +246,7 @@ public class OwnProfileActivity extends AppCompatActivity implements NavigationV
             return pets.size();
         }
     }
+
     private void showToast(String text) {
         Context context = getApplicationContext();
         int duration = Toast.LENGTH_SHORT;
@@ -260,17 +281,39 @@ public class OwnProfileActivity extends AppCompatActivity implements NavigationV
         protected Void doInBackground(Void... voids) {
             AdoptedDTO pet = new AdoptedDTO();
 
-            UserDTO fromUser = UserDAO.getUserById(Integer.parseInt(userId));
+            UserDTO fromUser = UserDAO.getUserById(userId);
             UserDTO toUser = UserDAO.getUserByMail(toUserMail);
+            RehomingDTO rehomingPet = RehomingDAO.getRehomingPetById(petId);
+            RaceDTO race = RaceDAO.getRaceById(rehomingPet.getRace().getRaceId());
 
             pet.setFromUser(fromUser);
             pet.setToUser(toUser);
-            pet.setCode(code);
+            pet.setRace(race);
+            pet.setImagePath(rehomingPet.getImagePath());
+            pet.setGender(rehomingPet.getGender());
+            pet.setMonthOld(rehomingPet.getMonthOld());
 
             AdoptedDAO.insertAdoptedPet(pet);
 
-            RehomingDAO.deleteRehomingPetByCode(code);
+            RehomingDAO.deleteRehomingPetById(petId);
+            startActivity(new Intent(OwnProfileActivity.this, OwnProfileActivity.class).putExtra("userId", userId));
 
+            return null;
+        }
+
+
+        @Override
+        protected void onPostExecute(Void voids) {
+            super.onPostExecute(voids);
+        }
+    }
+
+    public class AdoptedPetDelete extends AsyncTask<Void, Void, Void> {
+        @Override
+        protected Void doInBackground(Void... voids) {
+            RehomingDAO.deleteRehomingPetById(petId);
+
+            startActivity(new Intent(OwnProfileActivity.this, OwnProfileActivity.class).putExtra("userId", userId));
 
             return null;
         }
@@ -279,25 +322,29 @@ public class OwnProfileActivity extends AppCompatActivity implements NavigationV
         protected void onPostExecute(Void voids) {
             super.onPostExecute(voids);
         }
+
     }
-}
-
-class MyOwnHolder extends RecyclerView.ViewHolder {
-
-    CircleImageView image;
-    TextView textViewRace;
-    TextView textViewGender;
-    TextView textViewMonth;
-    Button rehomedBtn;
 
 
-    public MyOwnHolder(View itemView) {
-        super(itemView);
-        image = itemView.findViewById(R.id.image);
-        textViewRace = itemView.findViewById(R.id.textViewRace);
-        textViewGender = itemView.findViewById(R.id.textViewGender);
-        textViewMonth = itemView.findViewById(R.id.textViewAge);
-        rehomedBtn = itemView.findViewById(R.id.rehomedBtn);
+    class MyOwnHolder extends RecyclerView.ViewHolder {
 
+        CircleImageView image;
+        TextView textViewRace;
+        TextView textViewGender;
+        TextView textViewMonth;
+        Button rehomedBtn;
+        Button deleteBtn;
+
+
+        public MyOwnHolder(View itemView) {
+            super(itemView);
+            image = itemView.findViewById(R.id.image);
+            textViewRace = itemView.findViewById(R.id.textViewRace);
+            textViewGender = itemView.findViewById(R.id.textViewGender);
+            textViewMonth = itemView.findViewById(R.id.textViewAge);
+            rehomedBtn = itemView.findViewById(R.id.rehomedBtn);
+            deleteBtn = itemView.findViewById(R.id.deleteBtn);
+
+        }
     }
 }
