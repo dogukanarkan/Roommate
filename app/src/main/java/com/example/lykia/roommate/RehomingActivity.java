@@ -52,9 +52,9 @@ public class RehomingActivity extends AppCompatActivity {
 
     private CircleImageView mDisplayImage;
     private Button mImageBtn;
+    private Button mRehomingBtn;
     private static  final int GALLERY_PICK=1;
 
-    private boolean check = true;
     private boolean resultCheck = true;
     private String imagePath;
 
@@ -71,6 +71,7 @@ public class RehomingActivity extends AppCompatActivity {
     private List<AnimalDTO> animals;
     private List<RaceDTO> races;
     private Uri resultUri;
+    private byte[] thumbByte;
 
     Spinner animalSpinner;
     Spinner raceSpinner;
@@ -95,6 +96,7 @@ public class RehomingActivity extends AppCompatActivity {
         additional = (EditText) findViewById(R.id.ek);
 
         mImageBtn=(Button)findViewById(R.id.addPhotoBtn);
+        mRehomingBtn=(Button)findViewById(R.id.rehomingBtn);
         mDisplayImage=(CircleImageView)findViewById(R.id.userSingleImage);
         animalSpinner=(Spinner)findViewById(R.id.spinner);
         raceSpinner=(Spinner)findViewById(R.id.spinner2);
@@ -127,6 +129,20 @@ public class RehomingActivity extends AppCompatActivity {
                 startActivityForResult(Intent.createChooser(galleryIntent,"SELECT IMAGE"),GALLERY_PICK);
             }
         });
+
+        mRehomingBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                File thumbFile = new File(resultUri.getPath());
+                Bitmap thumbImage = new Compressor(RehomingActivity.this).setMaxHeight(100).setMaxWidth(100).setQuality(30).compressToBitmap(thumbFile);
+
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                thumbImage.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+                thumbByte = stream.toByteArray();
+
+                new Background().execute();
+            }
+        });
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -150,46 +166,14 @@ public class RehomingActivity extends AppCompatActivity {
                     .setAspectRatio(1,1)
                     .start(this);
         }
+
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
             if (resultCode == RESULT_OK) {
                 resultUri = result.getUri();
                 File thumbFile = new File(resultUri.getPath());
-                Bitmap thumbImage = new Compressor(this).setMaxHeight(100).setMaxWidth(100).setQuality(30).compressToBitmap(thumbFile);
 
-                ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                thumbImage.compress(Bitmap.CompressFormat.JPEG, 100, stream);
-                final byte[] thumbByte = stream.toByteArray();
-
-                new Background().execute();
-
-                while(check) {
-
-                }
-
-                StorageReference filePath = imageStorage.child("animalImages").child(rehomingId + ".jpg");
-
-                UploadTask uploadTask = filePath.putBytes(thumbByte);
-                uploadTask.addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
-                        if (task.isSuccessful()) {
-                            imagePath = task.getResult().getDownloadUrl().toString();
-
-                            Picasso.get().load(imagePath).into(mDisplayImage);
-
-                            new UpdateImagePath().execute();
-
-                            if (resultCheck) {
-                                startActivity(new Intent(RehomingActivity.this, OwnProfileActivity.class));
-                                finish();
-                            }
-                        }
-                    }
-                });
-
-            } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
-                Exception error = result.getError();
+                Picasso.get().load(thumbFile).placeholder(R.drawable.default_rehoming_icon).into(mDisplayImage);
             }
         }
     }
@@ -227,8 +211,6 @@ public class RehomingActivity extends AppCompatActivity {
 
             rehomingId = RehomingDAO.getRehomingCount();
 
-            check = false;
-
             return null;
         }
 
@@ -236,7 +218,24 @@ public class RehomingActivity extends AppCompatActivity {
         protected void onPostExecute(Void voids) {
             super.onPostExecute(voids);
 
+            StorageReference filePath = imageStorage.child("animalImages").child(rehomingId + ".jpg");
 
+            UploadTask uploadTask = filePath.putBytes(thumbByte);
+            uploadTask.addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+                    if (task.isSuccessful()) {
+                        imagePath = task.getResult().getDownloadUrl().toString();
+
+                        new UpdateImagePath().execute();
+
+                        if (resultCheck) {
+                            startActivity(new Intent(RehomingActivity.this, OwnProfileActivity.class));
+                            finish();
+                        }
+                    }
+                }
+            });
         }
     }
 
