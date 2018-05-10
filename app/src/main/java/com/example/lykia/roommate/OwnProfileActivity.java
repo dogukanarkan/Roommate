@@ -36,6 +36,7 @@ import com.example.lykia.roommate.DTOs.AdoptedDTO;
 import com.example.lykia.roommate.DTOs.RaceDTO;
 import com.example.lykia.roommate.DTOs.RehomingDTO;
 import com.example.lykia.roommate.DTOs.UserDTO;
+import com.google.firebase.auth.FirebaseAuth;
 import com.squareup.picasso.Picasso;
 
 import org.w3c.dom.Text;
@@ -64,6 +65,7 @@ public class OwnProfileActivity extends AppCompatActivity implements NavigationV
     private TextView userName;
     private TextView userLocation;
     private UserDTO user;
+    private Dialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,14 +79,17 @@ public class OwnProfileActivity extends AppCompatActivity implements NavigationV
                 switch (item.getItemId()) {
                     case R.id.home_nav:
                         Intent intent = new Intent(OwnProfileActivity.this, HomeActivity.class);
+                        intent.putExtra("userId", userId);
                         startActivity(intent);
                         return true;
                     case R.id.search_nav:
                         Intent intent1 = new Intent(OwnProfileActivity.this, SearchActivity.class);
+                        intent1.putExtra("userId", userId);
                         startActivity(intent1);
                         return true;
                     case R.id.profile_nav:
                         Intent intent2 = new Intent(OwnProfileActivity.this, OwnProfileActivity.class);
+                        intent2.putExtra("userId", userId);
                         startActivity(intent2);
                         return true;
                 }
@@ -162,6 +167,7 @@ public class OwnProfileActivity extends AppCompatActivity implements NavigationV
                 startActivity(new Intent(OwnProfileActivity.this, EditProfileActivity.class).putExtra("userId", userId));
                 break;
             case R.id.logout_nav:
+                FirebaseAuth.getInstance().signOut();
                 startActivity(new Intent(OwnProfileActivity.this, MainActivity.class));
                 break;
 
@@ -197,7 +203,7 @@ public class OwnProfileActivity extends AppCompatActivity implements NavigationV
             holder.rehomedBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    final Dialog dialog = new Dialog(OwnProfileActivity.this);
+                    dialog = new Dialog(OwnProfileActivity.this);
                     dialog.setContentView(R.layout.adopted_layout);
                     dialog.setTitle("Sahiplendir");
 
@@ -211,11 +217,7 @@ public class OwnProfileActivity extends AppCompatActivity implements NavigationV
                         public void onClick(View v) {
                             toUserMail = toUser.getText().toString();
 
-                            new AdoptedPet().execute();
-
-                            dialog.dismiss();
-                            text = "Hayvanınız Sahiplendirildi";
-                            showToast(text);
+                            new MailBackground().execute();
                         }
                     });
 
@@ -270,6 +272,31 @@ public class OwnProfileActivity extends AppCompatActivity implements NavigationV
             userLocation.setText(user.getLocation());
             Picasso.get().load(user.getImagePath()).placeholder(R.drawable.person).into(userImage);
 
+        }
+    }
+
+    public class MailBackground extends AsyncTask<Void,Void,Boolean>{
+        @Override
+        protected Boolean doInBackground(Void... voids) {
+            UserDTO user = UserDAO.getUserByMail(toUserMail);
+
+            return user != null;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean param) {
+            super.onPostExecute(param);
+
+            if (param) {
+                new AdoptedPet().execute();
+
+                dialog.dismiss();
+                text = "Hayvanınız sahiplendirildi.";
+                showToast(text);
+            } else {
+                text = "Böyle bir kullanıcı bulunamadı.";
+                showToast(text);
+            }
         }
     }
 
