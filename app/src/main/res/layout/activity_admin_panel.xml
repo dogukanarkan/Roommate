@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.lykia.roommate.AdminPanelActivity"
+    tools:layout_editor_absoluteY="25dp">
+
+    <include
+        android:id="@+id/adminPanelAppBar"
+        layout="@layout/app_bar_layout">
+    </include>
+
+    <Button
+        android:id="@+id/animalButton"
+
+        android:layout_width="304dp"
+        android:layout_height="58dp"
+
+        android:layout_marginBottom="30dp"
+        android:layout_marginEnd="49dp"
+        android:layout_marginStart="49dp"
+        android:background="@drawable/buttonshapes"
+        android:shadowColor="#8A6367"
+        android:shadowRadius="5"
+        android:text="Git"
+        android:textAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Title.Inverse"
+        android:textSize="25sp"
+        app:layout_constraintBottom_toTopOf="@+id/textView9"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="391dp"
+        android:layout_height="0dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginBottom="21dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginStart="18dp"
+        android:layout_marginTop="120dp"
+        android:text="Sahiplendirilen hayvanları görmek için tıklayın.."
+        android:textColor="?android:attr/colorControlActivated"
+        android:textSize="26sp"
+        app:layout_constraintBottom_toTopOf="@+id/animalButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="367dp"
+        android:layout_height="87dp"
+        android:layout_marginBottom="26dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginStart="18dp"
+        android:text="Bilgilendirme yazıları eklemek için tıklayın.."
+        android:textColor="?android:attr/colorControlActivated"
+        android:textSize="26sp"
+        app:layout_constraintBottom_toTopOf="@+id/articleButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/animalButton" />
+
+    <Button
+        android:id="@+id/articleButton"
+
+        android:layout_width="304dp"
+        android:layout_height="58dp"
+
+        android:layout_marginBottom="179dp"
+        android:layout_marginEnd="49dp"
+        android:layout_marginStart="49dp"
+        android:background="@drawable/buttonshapes"
+        android:shadowColor="#8A6367"
+        android:shadowRadius="5"
+        android:text="Git"
+        android:textAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Title.Inverse"
+        android:textSize="25sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView9" />
+</android.support.constraint.ConstraintLayout>
