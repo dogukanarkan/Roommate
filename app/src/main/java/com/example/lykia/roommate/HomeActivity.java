@@ -31,9 +31,12 @@ import com.example.lykia.roommate.DAOs.RehomingDAO;
 import com.example.lykia.roommate.DTOs.AnimalDTO;
 import com.example.lykia.roommate.DTOs.RaceDTO;
 import com.example.lykia.roommate.DTOs.RehomingDTO;
+import com.google.firebase.auth.FirebaseAuth;
 import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -53,7 +56,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private MyHomeAdapter adapter;
     ArrayAdapter<CharSequence>adapterGender;
 
-    private String userId;
+    private int userId;
     private int animalSpinnerId;
     private int raceCount = 0;
     private boolean check = false;
@@ -67,11 +70,11 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         genderSpinner= findViewById((R.id.genderSpinner));
 
         petsByGender = new ArrayList<>();
-        userId = getIntent().getStringExtra("userId");
+        userId = getIntent().getExtras().getInt("userId");
 
         toolbar = findViewById(R.id.homeAppBar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("");
+        getSupportActionBar().setTitle("Roommate");
 
         setNavigationViewListener();
 
@@ -104,6 +107,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                         return true;
                     case R.id.search_nav:
                         Intent intent1=new Intent(HomeActivity.this,SearchActivity.class);
+                        intent1.putExtra("userId", userId);
                         startActivity(intent1);
                         return true;
                     case R.id.profile_nav:
@@ -168,6 +172,22 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         });
     }
 
+    public String setProperAge(int monthOld) {
+        String age, month, result;
+
+        age = Integer.toString(monthOld / 12);
+        month = Integer.toString(monthOld % 12);
+
+        if (age.equals("0")) {
+            result = month + " ay";
+        } else {
+            result = age + " yıl " + month + " ay";
+        }
+
+
+        return result;
+    }
+
     private void setNavigationViewListener() {
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view_home);
         navigationView.setNavigationItemSelectedListener(this);
@@ -219,6 +239,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 startActivity(new Intent(HomeActivity.this, EditProfileActivity.class).putExtra("userId", userId));
                 break;
             case R.id.logout_nav:
+                FirebaseAuth.getInstance().signOut();
                 startActivity(new Intent(HomeActivity.this, MainActivity.class));
                 break;
 
@@ -248,7 +269,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             Picasso.get().load(pets.get(position).getImagePath()).placeholder(R.drawable.default_rehoming_icon).into(holder.animalImage);
             holder.textViewAnimal.setText(pets.get(position).getRace().getAnimal().getAnimalName());
             holder.textViewRace.setText(pets.get(position).getRace().getRaceName());
-            holder.textViewMonth.setText(Integer.toString(pets.get(position).getMonthOld()));
+            holder.textViewMonth.setText(setProperAge(pets.get(position).getMonthOld()));
             holder.textViewGender.setText(pets.get(position).getGender());
             holder.textViewRefCode.setText(pets.get(position).getCode());
 
@@ -436,7 +457,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
 class MyHomeHolder extends RecyclerView.ViewHolder {
 
-    ImageView animalImage;
+    CircleImageView animalImage;
     TextView textViewAnimal;
     TextView textViewRace;
     TextView textViewGender;
