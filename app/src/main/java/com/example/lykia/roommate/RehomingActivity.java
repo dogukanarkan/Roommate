@@ -230,7 +230,7 @@ public class RehomingActivity extends AppCompatActivity {
                         new UpdateImagePath().execute();
 
                         if (resultCheck) {
-                            startActivity(new Intent(RehomingActivity.this, OwnProfileActivity.class));
+                            startActivity(new Intent(RehomingActivity.this, OwnProfileActivity.class).putExtra("userId", userId));
                             finish();
                         }
                     }

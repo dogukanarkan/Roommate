@@ -67,6 +67,7 @@ public class AddArticleActivity extends AppCompatActivity {
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Yazı Ekle");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         adminId = getIntent().getExtras().getInt("adminId");
         imageStorage = FirebaseStorage.getInstance().getReference();
@@ -98,16 +99,9 @@ public class AddArticleActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.admin_app_bar_menu, menu);
-
-        return true;
-    }
-
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.log_out:
+            case android.R.id.home:
                 finish();
                 break;
         }

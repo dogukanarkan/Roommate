@@ -33,6 +33,7 @@ public class SearchActivity extends AppCompatActivity {
     private List<UserDTO> list;
     private EditText SearchEditText;
     private TextView emptySearch;
+    private int userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,20 +46,25 @@ public class SearchActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         navButton = (BottomNavigationView) findViewById(R.id.bottomBar);
 
+        userId = getIntent().getExtras().getInt("userId");
+
         navButton.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.home_nav:
                         Intent intent = new Intent(SearchActivity.this, HomeActivity.class);
+                        intent.putExtra("userId", userId);
                         startActivity(intent);
                         break;
                     case R.id.search_nav:
                         Intent inten1=new Intent(SearchActivity.this,SearchActivity.class);
+                        inten1.putExtra("userId", userId);
                         startActivity(inten1);
                         break;
                     case R.id.profile_nav:
                         Intent intent2=new Intent(SearchActivity.this,OwnProfileActivity.class);
+                        intent2.putExtra("userId", userId);
                         startActivity(intent2);
                         break;
 
@@ -128,7 +134,7 @@ public class SearchActivity extends AppCompatActivity {
         @Override
         public void onBindViewHolder(MyHolder holder, int position) {
             String fullName = users.get(position).getFirstName() + " " + users.get(position).getLastName();
-            final String userId = Integer.toString(users.get(position).getUserId());
+            userId = users.get(position).getUserId();
 
             holder.name.setText(fullName);
             Picasso.get().load(users.get(position).getImagePath()).placeholder(R.drawable.person).into(holder.image);

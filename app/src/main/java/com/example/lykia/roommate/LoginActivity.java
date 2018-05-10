@@ -43,12 +43,6 @@ public class LoginActivity extends AppCompatActivity {
 
     private int id;
 
-    public void onClick(View v) {
-        startActivity(new Intent(LoginActivity.this, ForgotPasswordActivity.class));
-
-
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -122,7 +116,7 @@ public class LoginActivity extends AppCompatActivity {
 
                 loginUserToFirebase(mail, password);
 
-                startActivity(new Intent(LoginActivity.this, AllMessageActivity.class).putExtra("userId", id));
+                startActivity(new Intent(LoginActivity.this, HomeActivity.class).putExtra("userId", id));
                 finish();
             } else if (result.equals("admin")) {
                 loginProgress.dismiss();
@@ -133,7 +127,7 @@ public class LoginActivity extends AppCompatActivity {
 
                 loginButton.setEnabled(true);
 
-                startActivity(new Intent(LoginActivity.this, AddArticleActivity.class).putExtra("adminId", id));
+                startActivity(new Intent(LoginActivity.this, AdminPanelActivity.class).putExtra("adminId", id));
                 finish();
             }
         }

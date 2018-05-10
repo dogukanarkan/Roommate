@@ -80,9 +80,9 @@ public class RegisterActivity extends AppCompatActivity {
 
                     btnRegister.setEnabled(true);
                 } else {
-                    new Background().execute("checkMail", "registerUser");
-
                     registerUserToFirebase(fullName, mail, password);
+
+                    new Background().execute("checkMail", "registerUser");
                 }
             }
         });
