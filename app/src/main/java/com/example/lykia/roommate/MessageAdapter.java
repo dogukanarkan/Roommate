@@ -142,31 +142,39 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
         protected void onPostExecute(Context context) {
             super.onPostExecute(context);
 
-            final Dialog dialog = new Dialog(context);
-            dialog.setContentView(R.layout.custom);
-            dialog.setTitle(code);
+            if (rehoming == null) {
+                Dialog dialog = new Dialog(context);
+                dialog.setContentView(R.layout.custom2);
+                dialog.setTitle("Bu hayvan sistemde yoktur.");
 
-            TextView animalText = (TextView) dialog.findViewById(R.id.animalName);
-            animalText.setText(rehoming.getRace().getAnimal().getAnimalName());
-            TextView raceText = (TextView) dialog.findViewById(R.id.raceText);
-            raceText.setText(rehoming.getRace().getRaceName());
-            TextView monthText = (TextView) dialog.findViewById(R.id.month);
-            monthText.setText(Integer.toString(rehoming.getMonthOld()));
-            TextView genderText = (TextView) dialog.findViewById(R.id.gender);
-            genderText.setText(rehoming.getGender());
-            TextView information=(TextView)dialog.findViewById(R.id.additional);
-            information.setText(rehoming.getInformation());
-            CircleImageView image1 = (CircleImageView) dialog.findViewById(R.id.image);
-            Picasso.get().load(rehoming.getImagePath()).into(image1);
-            Button angryButton = (Button)dialog.findViewById(R.id.angry_btn);
-            angryButton.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
-                    dialog.dismiss();
+                dialog.show();
+            } else {
+                final Dialog dialog = new Dialog(context);
+                dialog.setContentView(R.layout.custom);
+                dialog.setTitle(code);
 
-                }
-            });
+                TextView animalText = (TextView) dialog.findViewById(R.id.animalName);
+                animalText.setText(rehoming.getRace().getAnimal().getAnimalName());
+                TextView raceText = (TextView) dialog.findViewById(R.id.raceText);
+                raceText.setText(rehoming.getRace().getRaceName());
+                TextView monthText = (TextView) dialog.findViewById(R.id.month);
+                monthText.setText(Integer.toString(rehoming.getMonthOld()));
+                TextView genderText = (TextView) dialog.findViewById(R.id.gender);
+                genderText.setText(rehoming.getGender());
+                TextView information = (TextView) dialog.findViewById(R.id.additional);
+                information.setText(rehoming.getInformation());
+                CircleImageView image1 = (CircleImageView) dialog.findViewById(R.id.image);
+                Picasso.get().load(rehoming.getImagePath()).into(image1);
+                Button angryButton = (Button) dialog.findViewById(R.id.angry_btn);
+                angryButton.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View v) {
+                        dialog.dismiss();
 
-            dialog.show();
+                    }
+                });
+
+                dialog.show();
+            }
         }
     }
 
