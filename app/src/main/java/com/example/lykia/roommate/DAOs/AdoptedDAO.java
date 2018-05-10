@@ -13,8 +13,8 @@ import java.util.List;
 
 public class AdoptedDAO {
 
-    private static final String getAdoptedPetQuery = "SELECT * FROM Adopted JOIN User AS FromUser ON Adopted.from_user_id = FromUser.user_id JOIN User AS ToUser ON Adopted.to_user_id = ToUser.user_id JOIN Race ON Adopted.race_id = Race.race_id WHERE adopted_id = ?";
-    private static final String getAllAdoptedPetsQuery = "SELECT * FROM Adopted JOIN User AS FromUser ON Adopted.from_user_id = FromUser.user_id JOIN User AS ToUser ON Adopted.to_user_id = ToUser.user_id JOIN Race ON Adopted.race_id = Race.race_id";
+    private static final String getAdoptedPetQuery = "SELECT * FROM Adopted JOIN User AS FromUser ON Adopted.from_user_id = FromUser.user_id JOIN User AS ToUser ON Adopted.to_user_id = ToUser.user_id JOIN Race ON Adopted.race_id = Race.race_id JOIN Animal ON Race.animal_id = Animal.animal_id WHERE adopted_id = ?";
+    private static final String getAllAdoptedPetsQuery = "SELECT * FROM Adopted JOIN User AS FromUser ON Adopted.from_user_id = FromUser.user_id JOIN User AS ToUser ON Adopted.to_user_id = ToUser.user_id JOIN Race ON Adopted.race_id = Race.race_id JOIN Animal ON Race.animal_id = Animal.animal_id";
     private static final String insertAdoptedPetQuery = "INSERT INTO Adopted(from_user_id, to_user_id, race_id, image_path, gender, month_old, adopted_date) VALUES(?, ?, ?, ?, ?, ?, NOW())";
     private static final String deleteAdoptedPetQuery = "DELETE FROM Adopted WHERE adopted_id = ?";
 
